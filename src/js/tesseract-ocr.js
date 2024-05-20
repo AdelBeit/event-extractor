@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", __main__);
 
 function __main__() {
-  let inputs = document.querySelectorAll(".inputfile");
+  var inputs = document.querySelectorAll(".inputfile");
   Array.prototype.forEach.call(inputs, function (input) {
-    let label = input.nextElementSibling,
+    var label = input.nextElementSibling,
       labelVal = label.innerHTML;
 
     input.addEventListener("change", function (e) {
-      let fileName = "";
+      var fileName = "";
       if (this.files && this.files.length > 1)
         fileName = (this.getAttribute("data-multiple-caption") || "").replace(
           "{count}",
@@ -50,7 +50,7 @@ function __main__() {
   });
 
   document.getElementById("startLink").addEventListener("click", function () {
-    let img = document.getElementById("selected-image");
+    var img = document.getElementById("selected-image");
     startRecognize(img);
   });
 }
@@ -64,67 +64,9 @@ function startRecognize(img) {
   recognizeFile(img);
 }
 
-let startTime = null;
-function progressUpdate(packet) {
-  let log = document.getElementById("log");
-  startTime = startTime || new Date();
-  const timerLabel = document.createElement("div");
-  timerLabel.id = "timer-label";
-  log.appendChild(timerLabel);
-
-  // Find the corresponding div for the packet status
-  let line = Array.from(log.children).find(
-    (child) => child.status === packet.status
-  );
-
-  if (line) {
-    // Update progress if it exists
-    if ("progress" in packet) {
-      const progress = line.querySelector("progress");
-      progress.value = packet.progress;
-    }
-  } else {
-    // Create a new div for the packet
-    line = document.createElement("div");
-    line.status = packet.status;
-    const status = document.createElement("div");
-    status.className = "status";
-    status.appendChild(document.createTextNode(packet.status));
-    line.appendChild(status);
-
-    if ("progress" in packet) {
-      const progress = document.createElement("progress");
-      progress.value = packet.progress;
-      progress.max = 1;
-      line.appendChild(progress);
-    }
-
-    if (packet.status === "done") {
-      const pre = document.createElement("pre");
-      pre.appendChild(
-        document.createTextNode(packet.data.text.replace(/\n\s*\n/g, "\n"))
-      );
-      line.innerHTML = "";
-      line.appendChild(pre);
-      toggleIcons(
-        ["arrow-down", "arrow-right"],
-        "fa-check",
-        "fa-spinner fa-spin"
-      );
-
-      // Stop the timer and update the label
-      const endTime = new Date();
-      const duration = Math.round((endTime - startTime) / 1000);
-      const timerLabel = document.getElementById("timer-label");
-      timerLabel.textContent = `Recognition completed in ${duration} seconds`;
-    }
-
-    log.insertBefore(line, log.firstChild);
-  }
-}
-
 function recognizeFile(file) {
   document.getElementById("log").innerHTML = "";
+  var startTime = new Date();
   const corePath =
     window.navigator.userAgent.indexOf("Edge") > -1
       ? `src/js/tesseract-core.asm.js`
@@ -143,7 +85,70 @@ function recognizeFile(file) {
     .then(function (data) {
       console.log(data);
       progressUpdate({ status: "done", data: data });
+      const endTime = new Date();
+      const duration = Math.round((endTime - startTime) / 1000);
+      const timerLabel = document.createElement("div");
+      timerLabel.textContent = `Recognition completed in ${duration} seconds`;
+      document.querySelector("#log").appendChild(timerLabel);
     });
+}
+
+function progressUpdate(packet) {
+  var log = document.getElementById("log");
+
+  if (log.firstChild && log.firstChild.status === packet.status) {
+    if ("progress" in packet) {
+      var progress = log.firstChild.querySelector("progress");
+      progress.value = packet.progress;
+    }
+  } else {
+    var line = document.createElement("div");
+    line.status = packet.status;
+    var status = document.createElement("div");
+    status.className = "status";
+    status.appendChild(document.createTextNode(packet.status));
+    line.appendChild(status);
+
+    if ("progress" in packet) {
+      var progress = document.createElement("progress");
+      progress.value = packet.progress;
+      progress.max = 1;
+      line.appendChild(progress);
+    }
+
+    if (packet.status == "done") {
+      log.innerHTML = "";
+      extractEvents(packet.data.text);
+      var pre = document.createElement("pre");
+      pre.appendChild(document.createTextNode(extractedEvent.join("\n")));
+      line.innerHTML = "";
+      line.appendChild(pre);
+      toggleIcons(
+        ["arrow-down", "arrow-right"],
+        "fa-check",
+        "fa-spinner fa-spin"
+      );
+    }
+
+    log.insertBefore(line, log.firstChild);
+  }
+}
+
+function extractEvents(text){
+  const lines = text.toLowerCase().split('\n');
+  let days = ['mon','tue','wed','thu','fri','sat','sun'];
+  let weekRange = null;
+  let currentDay = null;
+  let extractingShiftDetails = false;
+  let shiftDetails = {day:null,hours:null,description:null};
+  let storeInfo = [];
+  var extractedEvents = [];
+  lines.forEach((line, _i) => {
+    if(!weekRange){
+      extractedEvents.push(["week:", extractor.getWeek(line)]);
+      gotWeek = true;
+    }
+  });
 }
 
 /* --------------------------------------- */
