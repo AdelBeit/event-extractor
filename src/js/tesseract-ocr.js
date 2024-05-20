@@ -64,11 +64,18 @@ function startRecognize(img) {
   recognizeFile(img);
 }
 
+let startTime = null;
 function progressUpdate(packet) {
   let log = document.getElementById("log");
-  
+  startTime = startTime || new Date();
+  const timerLabel = document.createElement("div");
+  timerLabel.id = "timer-label";
+  log.appendChild(timerLabel);
+
   // Find the corresponding div for the packet status
-  let line = Array.from(log.children).find(child => child.status === packet.status);
+  let line = Array.from(log.children).find(
+    (child) => child.status === packet.status
+  );
 
   if (line) {
     // Update progress if it exists
@@ -104,7 +111,7 @@ function progressUpdate(packet) {
         "fa-check",
         "fa-spinner fa-spin"
       );
-      
+
       // Stop the timer and update the label
       const endTime = new Date();
       const duration = Math.round((endTime - startTime) / 1000);
@@ -113,14 +120,6 @@ function progressUpdate(packet) {
     }
 
     log.insertBefore(line, log.firstChild);
-
-    // Start the timer when the first packet arrives
-    if (!startTime) {
-      startTime = new Date();
-      const timerLabel = document.createElement("div");
-      timerLabel.id = "timer-label";
-      log.appendChild(timerLabel);
-    }
   }
 }
 
