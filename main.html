@@ -12,23 +12,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://kit.fontawesome.com/4414288e8e.js"></script>
     <script src="src/js/tesseract.min.js"></script>
-    <script src="src/js/grayscale.js"></script>
-    
   </head>
   <body>
     <main>
       <div class="wrap">
         <button onclick="cal.download('days')">download multiple</button>
-        <a href="#" onclick="javascript:cal_single.download('Awesome Day')"
-          >Single Event</a
-        >
-        <br />
-        <a href="#" onclick="javascript:cal.download('Holidays')"
-          >Multiple Events</a
-        >
-        <br />
-        <a href="#" onclick="javascript:makelogs(cal)">Console Output</a>
-      </div>
       <div class="container mt-3">
         <div class="row">
           <div class="col-12 col-md-4 mt-3 mt-md-0">
@@ -88,9 +76,10 @@
         </div>
       </div>
     </main>
+    <script src="src/js/eventExtractor.js"></script>
     <script src="src/js/tesseract-ocr.js"></script>
     <script src="src/js/ics.deps.min.js"></script>
     <script src="src/js/ics.min.js"></script>
-    <script src="src/js/createEvent.js"></script>
+    <script src="src/js/createEvents.js"></script>
   </body>
 </html>

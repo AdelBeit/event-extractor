@@ -1,5 +1,30 @@
 document.addEventListener("DOMContentLoaded", __main__);
 
+var dummyData = `4:04 [ICT TORS
+  05/20/2024 - 05/26/2024 |
+  Mon 09:15 AM - 05:30 PM 7.75 hrs
+  a Coverage, NonCoverage, Coverage
+  © 20088 - University Village South
+  Tue 11:00 AM - 04:30 PM 5.00 hrs
+  @) a Coverage, NonCoverage
+  © 20088 - University Village South
+  Wed
+  (2) - No Shift -
+  Thu 09:15 AM - 05:00 PM 7.25 hrs
+  (23) a Coverage, NonCoverage, Coverage
+  © 20088 - University Village South
+  Fri 12:15 PM - 04:45 PM 4.50 hrs
+  © Coverage
+  Q 20088 - University Village South
+  Sat 07:30 AM - 04:00 PM 8.00 hrs
+  (25) © Coverage
+  Q 20088 - University Village South
+  Sun No Shift -
+  A 6 Claim Shifts
+  & ® =
+  Schedule Swap Shift Time Off More
+  mT =`;
+
 function __main__() {
   var inputs = document.querySelectorAll(".inputfile");
   Array.prototype.forEach.call(inputs, function (input) {
@@ -85,11 +110,11 @@ function recognizeFile(file) {
     .then(function (data) {
       console.log(data);
       progressUpdate({ status: "done", data: data });
-      const endTime = new Date();
-      const duration = Math.round((endTime - startTime) / 1000);
-      const timerLabel = document.createElement("div");
-      timerLabel.textContent = `Recognition completed in ${duration} seconds`;
-      document.querySelector("#log").appendChild(timerLabel);
+      // const endTime = new Date();
+      // const duration = Math.round((endTime - startTime) / 1000);
+      // const timerLabel = document.createElement("div");
+      // timerLabel.textContent = `Recognition completed in ${duration} seconds`;
+      // document.querySelector("#log").appendChild(timerLabel);
     });
 }
 
@@ -115,12 +140,17 @@ function progressUpdate(packet) {
       progress.max = 1;
       line.appendChild(progress);
     }
-
-    if (packet.status == "done") {
+    if (packet.status === "done") {
       log.innerHTML = "";
-      extractEvents(packet.data.text);
+      var ocrData = packet.data.text.replace(/\n\s*\n/g, "\n");
+      // send data for text extraction
+      var extractedEvents = process(ocrData);
+      // create icr files
+      createEvents(extractedEvents);
+      // TODO: delete this stuff no need to display
       var pre = document.createElement("pre");
-      pre.appendChild(document.createTextNode(extractedEvent.join("\n")));
+      pre.appendChild(document.createTextNode(ocrData));
+      pre.appendChild(document.createTextNode(extractedEvents));
       line.innerHTML = "";
       line.appendChild(pre);
       toggleIcons(
@@ -132,23 +162,6 @@ function progressUpdate(packet) {
 
     log.insertBefore(line, log.firstChild);
   }
-}
-
-function extractEvents(text){
-  const lines = text.toLowerCase().split('\n');
-  let days = ['mon','tue','wed','thu','fri','sat','sun'];
-  let weekRange = null;
-  let currentDay = null;
-  let extractingShiftDetails = false;
-  let shiftDetails = {day:null,hours:null,description:null};
-  let storeInfo = [];
-  var extractedEvents = [];
-  lines.forEach((line, _i) => {
-    if(!weekRange){
-      extractedEvents.push(["week:", extractor.getWeek(line)]);
-      gotWeek = true;
-    }
-  });
 }
 
 /* --------------------------------------- */
