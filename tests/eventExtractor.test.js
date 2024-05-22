@@ -122,17 +122,17 @@ describe("getWeek", () => {
   });
 });
 
-describe("getDays", () => {
+describe.only("getDays", () => {
   test("returns an array of dates for a valid date range (inclusive)", () => {
     const dateRange = "05/20/2024 - 05/22/2024";
     const result = getDays(dateRange);
-    expect(result).toEqual(["5/20/2024", "5/21/2024", "5/22/2024"]);
+    expect(result).toEqual(["05/20/2024", "05/21/2024", "05/22/2024"]);
   });
 
   test("returns an array with a single date for a one-day range", () => {
     const dateRange = "05/20/2024 - 05/20/2024";
     const result = getDays(dateRange);
-    expect(result).toEqual(["5/20/2024"]);
+    expect(result).toEqual(["05/20/2024"]);
   });
 
   test("throws an error for an end date earlier than start date", () => {

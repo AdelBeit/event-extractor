@@ -66,6 +66,7 @@ function process(ocrText) {
     dateRange = getWeek(extractedInfo.shift());
   // get list of dates in week range
   let daysInWeek = getDays(dateRange);
+  console.log(daysInWeek);
   // process each event exerpt
   // create event objects
   for (let i = 0; i < extractedInfo.length; i++) {
@@ -73,6 +74,7 @@ function process(ocrText) {
     let dayOfTheWeek = getDay(dayExerpt).toLowerCase();
     if (missingKeywordsInOCR.includes(dayOfTheWeek)) continue;
     if (isShift(dayExerpt)) {
+      console.log(i);
       let [shiftStart, shiftEnd] = getShift(dayExerpt).split(" - ");
       let startDate = formatDateTime(daysInWeek[i], shiftStart);
       let endDate = formatDateTime(daysInWeek[i], shiftEnd);
@@ -116,9 +118,11 @@ function getDays(dateRange) {
     date <= endDate;
     date.setDate(date.getDate() + 1)
   ) {
-    const formattedDate = `${
-      date.getMonth() + 1
-    }/${date.getDate()}/${date.getFullYear()}`;
+    const formattedDate = new Intl.DateTimeFormat("en", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    }).format(date);
     dates.push(formattedDate);
   }
 

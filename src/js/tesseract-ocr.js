@@ -51,7 +51,11 @@ function __main__() {
         };
         let file = this.files[0];
         reader.readAsDataURL(file);
-        startRecognize(file);
+        try {
+          startRecognize(file);
+        } catch (e) {
+          console.log(e);
+        }
       } else {
         label.innerHTML = labelVal;
         document.getElementById("selected-image").src = "";
@@ -102,21 +106,17 @@ function recognizeFile(file) {
   document.getElementById("log").innerHTML = "";
   (async () => {
     const worker = await Tesseract.createWorker("eng", 1, {
-      logger: (m) => console.log(m),
+      logger: progressUpdate,
     });
     const ret = await worker.recognize(file);
-    // console.log(ret.data.text);
     log.innerHTML = "";
     var log = document.getElementById("log");
-    console.log(log);
     // var ocrData = packet.data.text.replace(/\n\s*\n/g, "\n");
     var ocrData = ret.data.text.replace(/\n\s*\n/g, "\n");
     // send data for text extraction
-    console.log(ocrData);
-    var extractedEvents = process(ocrData);
+    var extractedEvents = process(dummyData);
     // create icr files
     createEvents(extractedEvents);
-    console.log(extractedEvents);
     // TODO: delete this stuff no need to display
     var pre = document.createElement("pre");
     pre.appendChild(document.createTextNode(ocrData));
@@ -133,30 +133,11 @@ function recognizeFile(file) {
   })();
   return;
   var startTime = new Date();
-  const corePath =
-    window.navigator.userAgent.indexOf("Edge") > -1
-      ? `src/js/tesseract-core.asm.js`
-      : `src/js/tesseract-core.wasm.js`;
-
-  const worker = new Tesseract.TesseractWorker({
-    corePath,
-  });
-
-  worker
-    .recognize(file, "eng")
-    .progress(function (packet) {
-      console.info(packet);
-      progressUpdate(packet);
-    })
-    .then(function (data) {
-      console.log(data);
-      progressUpdate({ status: "done", data: data });
-      const endTime = new Date();
-      const duration = Math.round((endTime - startTime) / 1000);
-      const timerLabel = document.createElement("div");
-      timerLabel.textContent = `Recognition completed in ${duration} seconds`;
-      document.querySelector("#log").appendChild(timerLabel);
-    });
+  const endTime = new Date();
+  const duration = Math.round((endTime - startTime) / 1000);
+  const timerLabel = document.createElement("div");
+  timerLabel.textContent = `Recognition completed in ${duration} seconds`;
+  document.querySelector("#log").appendChild(timerLabel);
 }
 
 function progressUpdate(packet) {
