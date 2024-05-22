@@ -78,6 +78,15 @@ function __main__() {
     var img = document.getElementById("selected-image");
     startRecognize(img);
   });
+
+  document.getElementById("download").addEventListener("click", function () {
+    console.log("starting events extraction");
+    var extractedEvents = process(dummyData);
+    console.log("events extraction complete");
+    console.log("starting events creation");
+    createEvents(extractedEvents);
+    console.log("events creation complete", cal.events());
+  });
 }
 
 function startRecognize(img) {
@@ -182,3 +191,5 @@ function toggleIcons(iconIDs, addClasses, removeClasses) {
     }
   });
 }
+
+fileLoadedCheck();

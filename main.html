@@ -12,11 +12,15 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://kit.fontawesome.com/4414288e8e.js"></script>
     <script src="src/js/tesseract.min.js"></script>
+    <script src="src/js/utils.js"></script>
   </head>
   <body>
     <main>
-      <div class="wrap">
-        <button onclick="cal.download('days')">download multiple</button>
+      <div class="container mt-3">
+        <div class="row">
+          <button id="download">download multiple</button>
+        </div>
+      </div>
       <div class="container mt-3">
         <div class="row">
           <div class="col-12 col-md-4 mt-3 mt-md-0">
@@ -76,10 +80,9 @@
         </div>
       </div>
     </main>
-    <script src="src/js/eventExtractor.js"></script>
     <script src="src/js/tesseract-ocr.js"></script>
     <script src="src/js/ics.deps.min.js"></script>
-    <script src="src/js/ics.min.js"></script>
+    <script src="src/js/eventExtractor.js"></script>
     <script src="src/js/createEvents.js"></script>
   </body>
 </html>

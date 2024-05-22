@@ -53,7 +53,7 @@ function process(ocrText) {
     console.log("invalid date range");
     return null;
   }
-  // create events
+  // create event objects
   let daysInWeek = getDays(dateRange);
   extractedInfo.forEach((dayExerpt, _i) => {
     if (isShift(dayExerpt)) {
@@ -121,7 +121,7 @@ function getShift(line) {
     let shiftInfo = line.substr(i, 19);
     return shiftInfo;
   }
-  console.log("can't shift duration");
+  console.log("can't find shift duration");
   return null;
 }
 
@@ -158,14 +158,14 @@ function formatDateTime(date, time) {
   return isoString;
 }
 
-var extractor = {};
-extractor.getWeek = getWeek;
-extractor.getDay = getDay;
-extractor.getDays = getDays;
-extractor.getStoreInfo = getStoreInfo;
-extractor.process = process;
-
 // Expose the function for testing if in a Node environment
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
-  module.exports = extractor;
+  module.exports = {
+    getWeekgetWeek,
+    getDaygetDay,
+    getDaysgetDays,
+    getStoreInfogetStoreInfo,
+    processprocess,
+  };
 }
+fileLoadedCheck();
