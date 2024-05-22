@@ -79,14 +79,14 @@ function __main__() {
     startRecognize(img);
   });
 
-  document.getElementById("download").addEventListener("click", function () {
-    console.log("starting events extraction");
-    var extractedEvents = process(dummyData);
-    console.log("events extraction complete");
-    console.log("starting events creation");
-    createEvents(extractedEvents);
-    console.log("events creation complete", cal.events());
-  });
+  // document.getElementById("download").addEventListener("click", function () {
+  //   console.log("starting events extraction");
+  //   var extractedEvents = process(dummyData);
+  //   console.log("events extraction complete");
+  //   console.log("starting events creation");
+  //   createEvents(extractedEvents);
+  //   console.log("events creation complete", cal.events());
+  // });
 }
 
 function startRecognize(img) {
@@ -100,6 +100,13 @@ function startRecognize(img) {
 
 function recognizeFile(file) {
   document.getElementById("log").innerHTML = "";
+  (async () => {
+    const worker = await createWorker("eng");
+    const ret = await worker.recognize(file)
+    console.log(ret.data.text);
+    await worker.terminate();
+  })();
+  return;
   var startTime = new Date();
   const corePath =
     window.navigator.userAgent.indexOf("Edge") > -1
@@ -119,11 +126,11 @@ function recognizeFile(file) {
     .then(function (data) {
       console.log(data);
       progressUpdate({ status: "done", data: data });
-      // const endTime = new Date();
-      // const duration = Math.round((endTime - startTime) / 1000);
-      // const timerLabel = document.createElement("div");
-      // timerLabel.textContent = `Recognition completed in ${duration} seconds`;
-      // document.querySelector("#log").appendChild(timerLabel);
+      const endTime = new Date();
+      const duration = Math.round((endTime - startTime) / 1000);
+      const timerLabel = document.createElement("div");
+      timerLabel.textContent = `Recognition completed in ${duration} seconds`;
+      document.querySelector("#log").appendChild(timerLabel);
     });
 }
 
@@ -159,7 +166,7 @@ function progressUpdate(packet) {
       // TODO: delete this stuff no need to display
       var pre = document.createElement("pre");
       pre.appendChild(document.createTextNode(ocrData));
-      pre.appendChild(document.createTextNode(extractedEvents));
+      pre.appendChild(document.createTextNode(cal.events().join("\n")));
       line.innerHTML = "";
       line.appendChild(pre);
       toggleIcons(
