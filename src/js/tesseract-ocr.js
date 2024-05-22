@@ -101,9 +101,34 @@ function startRecognize(img) {
 function recognizeFile(file) {
   document.getElementById("log").innerHTML = "";
   (async () => {
-    const worker = await createWorker("eng");
-    const ret = await worker.recognize(file)
-    console.log(ret.data.text);
+    const worker = await Tesseract.createWorker("eng", 1, {
+      logger: (m) => console.log(m),
+    });
+    const ret = await worker.recognize(file);
+    // console.log(ret.data.text);
+    log.innerHTML = "";
+    var log = document.getElementById("log");
+    console.log(log);
+    // var ocrData = packet.data.text.replace(/\n\s*\n/g, "\n");
+    var ocrData = ret.data.text.replace(/\n\s*\n/g, "\n");
+    // send data for text extraction
+    console.log(ocrData);
+    var extractedEvents = process(ocrData);
+    // create icr files
+    createEvents(extractedEvents);
+    console.log(extractedEvents);
+    // TODO: delete this stuff no need to display
+    var pre = document.createElement("pre");
+    pre.appendChild(document.createTextNode(ocrData));
+    pre.appendChild(document.createTextNode(cal.events().join("\n")));
+    line.innerHTML = "";
+    line.appendChild(pre);
+    toggleIcons(
+      ["arrow-down", "arrow-right"],
+      "fa-check",
+      "fa-spinner fa-spin"
+    );
+    log.insertBefore(line, log.firstChild);
     await worker.terminate();
   })();
   return;
