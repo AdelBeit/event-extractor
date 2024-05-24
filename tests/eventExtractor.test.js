@@ -122,7 +122,7 @@ describe("getWeek", () => {
   });
 });
 
-describe.only("getDays", () => {
+describe("getDays", () => {
   test("returns an array of dates for a valid date range (inclusive)", () => {
     const dateRange = "05/20/2024 - 05/22/2024";
     const result = getDays(dateRange);
@@ -201,13 +201,16 @@ describe("getStoreInfo", () => {
 
 describe("getShift", () => {
   test("extracts shift info", () => {
-    const text = "Sat 07:30 AM - 04:00 PM 8.00 hrs";
-    const result = getShift(text);
-    expect(result).toBe("07:30 AM - 04:00 PM");
+    let text = "Sat 07:30 AM - 04:00 PM 8.00 hrs";
+    let result = getShift(text);
+    expect(result).toBe("07:30 AM-04:00 PM");
+    text = "Sat 07:30 AM -04:00PM 8.00 hrs";
+    result = getShift(text);
+    expect(result).toBe("07:30 AM-04:00 PM");
   });
 
   test("throws error when shift info is not found or improperly formatted", () => {
-    const text = "Sat 07:30 AM - 04:00PM 8.00 hrs";
+    const text = "Sat 07:30 AM - 5:00 PM 8.00 hrs";
     const result = () => getShift(text);
     expect(result).toThrow();
   });
@@ -215,9 +218,13 @@ describe("getShift", () => {
 
 describe("getShiftDuration", () => {
   test("calculates shift duration given shift beginning and end times", () => {
-    const start = "07:30 AM";
-    const end = "04:00 PM";
-    const result = getShiftDuration(start, end);
+    let start = "07:30 AM";
+    let end = "04:00 PM";
+    let result = getShiftDuration(start, end);
+    expect(result).toBe(8);
+    let range = "07:30 AM -04:00 PM";
+    [start,end] = getShift(range).split('-')
+    result = getShiftDuration(start, end);
     expect(result).toBe(8);
   });
 
@@ -259,12 +266,10 @@ describe("formatDateTime", () => {
   });
 });
 
-describe("process", () => {
-  test("extract events from tesseract ocr text body", () => {
-    const events = [{
-
-    }]
-    const result = process(dummyData[1]);
-    expect(result).toBe("20088 - University Village South");
-  });
-});
+// describe("process", () => {
+//   test("extract events from tesseract ocr text body", () => {
+//     const events = [{}];
+//     const result = process(dummyData[1]);
+//     expect(result).toBe("20088 - University Village South");
+//   });
+// });

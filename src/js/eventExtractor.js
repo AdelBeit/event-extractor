@@ -8,10 +8,10 @@ var regex = {
   sat: new RegExp(/Sat/),
   sun: new RegExp(/Sun/),
   anyDay: new RegExp(/Mon |Tue |Wed |Thu |Fri |Sat |Sun /),
-  shiftRange: new RegExp(/\d{2}:\d{2} (AM|PM) - \d{2}:\d{2} (AM|PM)/),
+  shiftRange: new RegExp(/\d{2}:\d{2}\s*(AM|PM)\s*-?\s*\d{2}:\d{2}\s*(AM|PM)/g),
   storeInfo: new RegExp(/\d{5}/),
   noShift: new RegExp(/No Shift/),
-  shift: new RegExp(/\d{2}:\d{2} (AM|PM)/),
+  shift: new RegExp(/\d{2}:\d{2}\s*(AM|PM)/),
   date: new RegExp(/\d{2}\/\d{2}\/\d{4}/),
 };
 
@@ -30,7 +30,7 @@ function getIndex(text, key) {
  */
 function process(ocrText) {
   missingKeywordsInOCR = [];
-  const text = ocrText.replaceAll("\n", "");
+  const text = ocrText.replaceAll("\n", " ");
   let matchOrder = ["week", "mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   let keywordIndices = [];
   let extractedInfo = [];
@@ -66,7 +66,6 @@ function process(ocrText) {
     dateRange = getWeek(extractedInfo.shift());
   // get list of dates in week range
   let daysInWeek = getDays(dateRange);
-  console.log(daysInWeek);
   // process each event exerpt
   // create event objects
   for (let i = 0; i < extractedInfo.length; i++) {
@@ -74,8 +73,7 @@ function process(ocrText) {
     let dayOfTheWeek = getDay(dayExerpt).toLowerCase();
     if (missingKeywordsInOCR.includes(dayOfTheWeek)) continue;
     if (isShift(dayExerpt)) {
-      console.log(i);
-      let [shiftStart, shiftEnd] = getShift(dayExerpt).split(" - ");
+      let [shiftStart, shiftEnd] = getShift(dayExerpt).split("-");
       let startDate = formatDateTime(daysInWeek[i], shiftStart);
       let endDate = formatDateTime(daysInWeek[i], shiftEnd);
       let storeInfo = getStoreInfo(dayExerpt);
@@ -163,15 +161,19 @@ function isShift(line) {
 /* returns shift range like so dd:dd AM/PM - dd:dd AM/PM */
 function getShift(line) {
   const pattern = regex["shiftRange"];
-  const i = line.search(pattern);
-  if (i !== -1) {
-    let shiftInfo = line.substr(i, 19);
+  const matches = line.match(pattern);
+  if (matches) {
+    // add a space between AM/PM and digits for final string
+    let shiftInfo = matches[0].replaceAll(/(?<!\s)(?=AM|PM)/g, " ");
+    // remove the space between the two shifts
+    shiftInfo = shiftInfo.replace(/(\s)(?=-)/, "");
+    shiftInfo = shiftInfo.replace(/(?<=-)(\s)/, "");
     return shiftInfo;
   }
   throw "can't find shift info";
 }
 
-/* given a tuple [start,end] shift times, calculate duration between start and end time */
+/* given shift start and end times, calculate duration between them */
 function getShiftDuration(shiftStart, shiftEnd) {
   if (
     shiftStart.search(regex["shift"]) === -1 ||
