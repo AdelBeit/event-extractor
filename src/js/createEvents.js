@@ -7,7 +7,6 @@ function createEvents(events) {
   events.forEach((e, _i) => {
     createEvent(e);
   });
-  cal.download('shift-schedule');
 }
 
 fileLoadedCheck();
