@@ -1,17 +1,10 @@
-function startRecognize(img) {
-  toggleIcons(
-    ["arrow-down", "arrow-right"],
-    "fa-spinner fa-spin",
-    "fa-arrow-right"
-  );
-  recognizeFiles(img);
-}
-
-async function recognizeFiles(files) {
-  document.getElementById("log").innerHTML = "";
-
+async function initTesseractScheduler() {
+  if (scheduler) {
+    console.log("scheduler already initialized");
+    return;
+  }
   /* scheudler */
-  const scheduler = Tesseract.createScheduler();
+  scheduler = Tesseract.createScheduler();
   const workerGen = async () => {
     const worker = await Tesseract.createWorker("eng", 1);
     scheduler.addWorker(worker);
@@ -23,33 +16,31 @@ async function recognizeFiles(files) {
     resArr[i] = workerGen();
   }
   await Promise.all(resArr);
+  console.log("scheduler initialized");
+}
 
+function initRecognition(files) {
+  updateStage("recognition");
+  updateProgress(getProgressMessages());
+  try {
+    recognizeFiles(files);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function recognizeFiles(files) {
   const results = [];
+  var ocrData = [];
   for (let i = 0; i < files.length; i++) {
-    let result = scheduler.addJob("recognize", files[i]).then((ret) => {
-      console.log(i, ret.data.text);
-      return x;
-    });
+    let result = scheduler
+      .addJob("recognize", files[i])
+      .then((res) => ocrData.push(res))
+      .catch((e) => console.log(e));
     results.push(result);
   }
   await Promise.all(results);
-  await scheduler.terminate();
-  return;
-
-  // const worker = await Tesseract.createWorker("eng", 1, {
-  //   logger: progressUpdate,
-  // });
-  // for (let i = 0; i < files.length; i++) {
-  //   let file = files[i];
-  //   const ret = await worker.recognize(file);
-  //   console.log("done", i, file, ret.data.text);
-  //   // try {
-  //   //   progressUpdate({ status: "done", data: ret.data });
-  //   // } catch (e) {
-  //   //   console.log(e);
-  //   // }
-  // }
-  // await worker.terminate();
+  publishResults(ocrData);
 }
 
 fileLoadedCheck();

@@ -218,27 +218,23 @@ describe("getShift", () => {
 
 describe("getShiftDuration", () => {
   test("calculates shift duration given shift beginning and end times", () => {
-    let start = "07:30 AM";
-    let end = "04:00 PM";
-    let result = getShiftDuration(start, end);
+    let shift = "07:30 AM - 04:00 PM";
+    let result = getShiftDuration(shift);
     expect(result).toBe(8);
-    let range = "07:30 AM -04:00 PM";
-    [start,end] = getShift(range).split('-')
-    result = getShiftDuration(start, end);
+    shift = "07:30 AM -04:00 PM";
+    result = getShiftDuration(shift);
     expect(result).toBe(8);
   });
 
   test("throws error when shift info is incorrectly formatted", () => {
-    const start = "07:30";
-    const end = "04:00 PM";
-    const result = () => getShiftDuration(start, end);
+    const shift = "07:30-04:00 PM";
+    const result = () => getShiftDuration(shift);
     expect(result).toThrow();
   });
 
   test("throws error when one of the strings has more than just shift info", () => {
-    const start = "Sun 07:30 AM";
-    const end = "04:00 PM";
-    const result = () => getShiftDuration(start, end);
+    const shift = "Sun 07:30 AM-04:00 PM";
+    const result = () => getShiftDuration(shift);
     expect(result).toThrow();
   });
 });

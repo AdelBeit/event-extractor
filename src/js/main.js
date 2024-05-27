@@ -6,54 +6,36 @@ var allExtractedWeeks = [];
 var selectedWeek;
 
 function __main__() {
-  var inputs = document.querySelectorAll(".inputfile");
-  Array.prototype.forEach.call(inputs, function (input) {
-    var label = input.nextElementSibling,
-      labelVal = label.innerHTML;
+  initTesseractScheduler();
+  var input = document.querySelector(".upload-button input");
 
-    input.addEventListener("change", function (e) {
-      var fileName = "";
-      if (this.files && this.files.length > 1)
-        fileName = (this.getAttribute("data-multiple-caption") || "").replace(
-          "{count}",
-          this.files.length
+  input.addEventListener("change", fileInputChangeHandler);
+  function fileInputChangeHandler(e) {
+    let files = Object.values(this.files);
+    // TODO: handle iphone screenshot file type conversion
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      if (
+        !file.type.includes("bmp") &&
+        !file.type.includes("jpg") &&
+        !file.type.includes("jpeg") &&
+        !file.type.includes("png") &&
+        !file.type.includes("pbm") &&
+        !file.type.includes("webp")
+      ) {
+        alert(
+          `Invalid file type ${file.type}. Please select valid image files.`
         );
-      else fileName = e.target.value.split("\\").pop();
-
-      if (fileName) {
-        label.querySelector("span").innerHTML = fileName;
-
-        let reader = new FileReader();
-        reader.onload = function () {
-          let dataURL = reader.result;
-          document.getElementById("selected-image").src = dataURL;
-          document.getElementById("selected-image").classList.add("col-12");
-        };
-        reader.readAsDataURL(this.files[0]);
-        try {
-          startRecognize(this.files);
-        } catch (e) {
-          console.log(e);
-        }
-      } else {
-        label.innerHTML = labelVal;
-        document.getElementById("selected-image").src = "";
-        document.getElementById("selected-image").classList.remove("col-12");
-        toggleIcons(
-          ["arrow-down", "arrow-right"],
-          "fa-arrow-right",
-          "fa-check fa-spinner fa-spin"
-        );
-        document.getElementById("log").innerHTML = "";
+        return;
       }
-    });
+    }
 
     try {
       initRecognition(this.files);
     } catch (e) {
       console.log(e);
     }
-
+    
     // Firefox bug fix
     input.addEventListener("focus", function () {
       input.classList.add("has-focus");
@@ -61,14 +43,39 @@ function __main__() {
     input.addEventListener("blur", function () {
       input.classList.remove("has-focus");
     });
+  }
+
+  const editButton = document.querySelector("button.toggle-button.edit");
+  editButton.addEventListener("click", (e) => {
+    toggleButtonUIHandler(editButton);
+    EDIT_MODE = !EDIT_MODE;
+  });
+
+  const weekSelector = document.querySelector("select.week-selector");
+  weekSelector.addEventListener("change", () => {
+    var selectedValue = weekSelector.value;
+    changeSelectedWeek(selectedValue);
   });
 }
 
-
-// download 
-function download(){
-  cal.download('shift-schedule');
+// download
+function download() {
+  cal.download("shift-schedule");
 }
 
+function publishResults(data) {
+  for (let i = data.length - 1; i >= 0; i--) {
+    let eventData = data[i];
+    let ocrData = eventData.data.text.replace(/\n\s*\n/g, "\n");
+    let extractedEvents = process(ocrData);
+    allExtractedWeeks.push(extractedEvents);
+  }
+  allExtractedWeeks.forEach((weekEvents, _i) => {
+    createEventWeek(weekEvents, _i);
+  });
+  selectedWeek = 0;
+  changeSelectedWeek(selectedWeek);
+  updateStage("review");
+}
 
 fileLoadedCheck();

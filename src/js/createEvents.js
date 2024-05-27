@@ -1,6 +1,7 @@
 var cal = ics();
-function createEvent(e) {
-  cal.addEvent(...Object.values(e));
+function createEvent(eventObject) {
+  let calEvent = calEventAdapter(eventObject);
+  cal.addEvent(...Object.values(calEvent));
 }
 
 function createEvents(events) {

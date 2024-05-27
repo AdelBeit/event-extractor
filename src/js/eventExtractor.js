@@ -10,9 +10,14 @@ var regex = {
   anyDay: new RegExp(/Mon |Tue |Wed |Thu |Fri |Sat |Sun /),
   shiftRange: new RegExp(/\d{2}:\d{2}\s*(AM|PM)\s*-?\s*\d{2}:\d{2}\s*(AM|PM)/g),
   storeInfo: new RegExp(/\d{5}/),
-  noShift: new RegExp(/No Shift/),
+  noShift: new RegExp(/No Shift|Time Off/),
   shift: new RegExp(/\d{2}:\d{2}\s*(AM|PM)/),
   date: new RegExp(/\d{2}\/\d{2}\/\d{4}/),
+  endOfLine: new RegExp(/Schedule/),
+};
+var cleanupRegex = {
+  shiftsToClaim: new RegExp(/A (\d{1})+ Claim Shift(s)*/g),
+  junk: new RegExp(/= \(8 =/g),
 };
 
 var missingKeywordsInOCR = [];
@@ -30,7 +35,9 @@ function getIndex(text, key) {
  */
 function process(ocrText) {
   missingKeywordsInOCR = [];
-  const text = ocrText.replaceAll("\n", " ");
+  log(ocrText);
+  let text = preProcess(ocrText);
+  log(text);
   let matchOrder = ["week", "mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   let keywordIndices = [];
   let extractedInfo = [];
@@ -72,24 +79,43 @@ function process(ocrText) {
     let dayExerpt = extractedInfo[i];
     let dayOfTheWeek = getDay(dayExerpt).toLowerCase();
     if (missingKeywordsInOCR.includes(dayOfTheWeek)) continue;
+    let event = {
+      day: dayOfTheWeek,
+      date: daysInWeek[i],
+      shift: "",
+      duration: "",
+      location: "",
+      isShift: false,
+    };
     if (isShift(dayExerpt)) {
-      let [shiftStart, shiftEnd] = getShift(dayExerpt).split("-");
-      let startDate = formatDateTime(daysInWeek[i], shiftStart);
-      let endDate = formatDateTime(daysInWeek[i], shiftEnd);
+      let shift = getShift(dayExerpt);
       let storeInfo = getStoreInfo(dayExerpt);
-      let location = storeInfo.substr(8);
-      let shiftDuration = getShiftDuration(shiftStart, shiftEnd);
-      let event = {
-        title: `Starbucks - ${location} - ${shiftDuration} hrs`,
-        description: storeInfo,
-        location: location,
-        start: startDate,
-        end: endDate,
+      let shiftDuration = getShiftDuration(shift).toFixed(2);
+      event = {
+        day: dayOfTheWeek,
+        date: daysInWeek[i],
+        shift: shift,
+        duration: shiftDuration,
+        location: storeInfo,
+        isShift: true,
       };
-      extractedEvents.push(event);
     }
+    log("event", event);
+    extractedEvents.push(event);
   }
   return extractedEvents;
+}
+
+function preProcess(text) {
+  text = text.replaceAll("\n", " ");
+  // trim the nav bar at the bottom to simplify extraction
+  const endOfText = getIndex(text, regex["endOfLine"]);
+  text = text.substring(0, endOfText);
+  for (let rgx of Object.values(cleanupRegex)) {
+    log(rgx);
+    text = text.replaceAll(rgx, "");
+  }
+  return text;
 }
 
 /* returns 'mm/dd/yyyy - mm/dd/yyyy' */
@@ -170,11 +196,13 @@ function getShift(line) {
     shiftInfo = shiftInfo.replace(/(?<=-)(\s)/, "");
     return shiftInfo;
   }
+  console.log(line);
   throw "can't find shift info";
 }
 
-/* given shift start and end times, calculate duration between them */
-function getShiftDuration(shiftStart, shiftEnd) {
+/* given shift start and end times like dd:dd AM - dd:dd PM, calculate duration between them */
+function getShiftDuration(shift) {
+  let [shiftStart, shiftEnd] = shift.split("-");
   if (
     shiftStart.search(regex["shift"]) === -1 ||
     shiftEnd.search(regex["shift"]) === -1
@@ -219,7 +247,7 @@ if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
     getWeek,
     getDays,
     getDay,
-    getStoreInfo,
+    getStoreInfo: getStoreInfo,
     getShift,
     getShiftDuration,
     formatDateTime,
