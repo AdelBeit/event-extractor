@@ -213,7 +213,9 @@ function getShiftDuration(shift) {
   const start = new Date(formatDateTime(d, shiftStart));
   const end = new Date(formatDateTime(d, shiftEnd));
   const lunchInMilliseconds = 30 * 60 * 1000;
-  const durationInMilliseconds = end - start - lunchInMilliseconds;
+  let durationInMilliseconds = end - start;
+  if (durationInMilliseconds >= 5 * 3600 * 1000)
+    durationInMilliseconds -= lunchInMilliseconds;
   const durationInHours = durationInMilliseconds / (1000 * 60 * 60);
   return durationInHours;
 }

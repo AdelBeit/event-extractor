@@ -224,6 +224,12 @@ describe("getShiftDuration", () => {
     shift = "07:30 AM -04:00 PM";
     result = getShiftDuration(shift);
     expect(result).toBe(8);
+    shift = "09:30 AM - 02:15 PM";
+    result = getShiftDuration(shift);
+    expect(result).toBe(4.75);
+    shift = "04:00 PM - 08:45 PM";
+    result = getShiftDuration(shift);
+    expect(result).toBe(4.75);
   });
 
   test("throws error when shift info is incorrectly formatted", () => {
