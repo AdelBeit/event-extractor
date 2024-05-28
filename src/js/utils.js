@@ -51,7 +51,7 @@ function updateProgress(messages) {
     dots = "";
     log.querySelector("label").textContent = message;
     waitTime = Math.random() * 2000 + 2500;
-    if (messages.length <= 0) {
+    if (messages.length <= 0 || stage !== "recognition") {
       clearInterval(interval);
     }
   }, waitTime);
@@ -64,7 +64,6 @@ function updateProgress(messages) {
     }
   }, 300);
 }
-
 
 /* adapter to turn event object to calendar object */
 function calEventAdapter(eventObject) {
