@@ -31,11 +31,15 @@ function initRecognition(files) {
 
 async function recognizeFiles(files) {
   const results = [];
-  var ocrData = [];
+  var ocrData = {};
   for (let i = 0; i < files.length; i++) {
     let result = scheduler
       .addJob("recognize", files[i])
-      .then((res) => ocrData.push(res))
+      .then((res) => {
+        let fileName = i;
+        ocrData[fileName] = res;
+        imageFiles[fileName] = files[i];
+      })
       .catch((e) => console.log(e));
     results.push(result);
   }

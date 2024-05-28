@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", __main__);
 
 var scheduler = undefined;
-var stage = "upload";
-var allExtractedWeeks = [];
+var stage = "upload"; // upload | recognition | review
+var allExtractedWeeks = {};
 var selectedWeek;
+var imageFiles = {};
+var imageReader;
 
 function __main__() {
   initTesseractScheduler();
+  initImageReader();
   var input = document.querySelector(".upload-button input");
 
   input.addEventListener("change", fileInputChangeHandler);
@@ -35,7 +38,7 @@ function __main__() {
     } catch (e) {
       console.log(e);
     }
-    
+
     // Firefox bug fix
     input.addEventListener("focus", function () {
       input.classList.add("has-focus");
@@ -64,16 +67,16 @@ function download() {
 }
 
 function publishResults(data) {
-  for (let i = data.length - 1; i >= 0; i--) {
-    let eventData = data[i];
-    let ocrData = eventData.data.text.replace(/\n\s*\n/g, "\n");
-    let extractedEvents = process(ocrData);
-    allExtractedWeeks.push(extractedEvents);
+  let fileNames = Object.keys(data);
+  for (let i = fileNames.length - 1; i >= 0; i--) {
+    let fileName = fileNames[i];
+    let extractedData = data[fileName];
+    let ocrText = extractedData.data.text.replace(/\n\s*\n/g, "\n");
+    let extractedEvents = process(ocrText);
+    allExtractedWeeks[fileName] = extractedEvents;
+    createEventWeek(extractedEvents, fileName);
   }
-  allExtractedWeeks.forEach((weekEvents, _i) => {
-    createEventWeek(weekEvents, _i);
-  });
-  selectedWeek = 0;
+  selectedWeek = fileNames[0];
   changeSelectedWeek(selectedWeek);
   updateStage("review");
 }

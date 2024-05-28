@@ -1,4 +1,3 @@
-
 /* eventObject: {day,date,shift,duration,location} */
 function createDayCard(eventObject) {
   let eventsContainer = document.querySelector("div.extracted-events");
@@ -46,18 +45,18 @@ function updateDayCard(event, index) {
   }
 }
 
-function createEventWeek(weekEvents, index) {
+function createEventWeek(weekEvents, fileName) {
   weekEvents = [...weekEvents];
   let weekDate = `${weekEvents[0].date} - ${weekEvents.slice(-1)[0].date}`;
   let newWeekOption = document.createElement("option");
   newWeekOption.textContent = weekDate;
-  newWeekOption.value = index;
+  newWeekOption.value = fileName;
   let weekSelector = document.querySelector("select.week-selector");
   weekSelector.appendChild(newWeekOption);
 }
 
-function changeSelectedWeek(index) {
-  allExtractedWeeks[index].forEach((event, _i) => {
+function changeSelectedWeek(fileName) {
+  allExtractedWeeks[fileName].forEach((event, _i) => {
     updateDayCard(event, _i);
   });
 }
