@@ -16,8 +16,8 @@ var regex = {
   endOfLine: new RegExp(/Schedule/),
 };
 var cleanupRegex = {
-  shiftsToClaim: new RegExp(/A (\d{1})+ Claim Shift(s)*/g),
-  junk: new RegExp(/= \(8 =/g),
+  shiftsToClaim: new RegExp(/A (\d{1})+ Claim Shift(s)?(\s)?/g),
+  junk: new RegExp(/= \(8 =(\s)?/g),
 };
 
 var missingKeywordsInOCR = [];
@@ -110,9 +110,8 @@ function preProcess(text) {
   text = text.replaceAll("\n", " ");
   // trim the nav bar at the bottom to simplify extraction
   const endOfText = getIndex(text, regex["endOfLine"]);
-  text = text.substring(0, endOfText);
+  if (endOfText >= 0) text = text.substring(0, endOfText);
   for (let rgx of Object.values(cleanupRegex)) {
-    log(rgx);
     text = text.replaceAll(rgx, "");
   }
   return text;
@@ -246,6 +245,7 @@ if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
   module.exports = {
     getIndex,
     process,
+    preProcess,
     getWeek,
     getDays,
     getDay,

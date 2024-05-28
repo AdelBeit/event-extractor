@@ -8,6 +8,7 @@ const {
   getShift,
   getShiftDuration,
   formatDateTime,
+  preProcess,
 } = require("../src/js/eventExtractor");
 
 let dummyData = [
@@ -65,7 +66,27 @@ let dummyData = [
     Schedule Swap Shift Time Off More
     mT =`,
   "Sat 07:30 AM - 04:00 PM 8.00 hrs (25) © Coverage Q  20088 - University Village South Schedule Swap Shift Time Off More mT =",
+  "Sat 8.00 hrs (25) © Coverage Q  20088 - University Village South Schedule Swap Shift Time Off More mT =",
 ];
+
+describe.only("preProcess", () => {
+  test("cleanup text", () => {
+    const text = `Sat 8.00 hrs (25)
+A 2 Claim Shifts
+© Coverage Q
+20088 - University Village South Schedule Swap Shift Time Off More mT =`;
+    const check =
+      "Sat 8.00 hrs (25) © Coverage Q 20088 - University Village South ";
+    const result = preProcess(text);
+    expect(result).toBe(check);
+  });
+  test("will return the same text if there's nothing to clean ", () => {
+    const text = "waldo";
+    const check = "waldo";
+    const result = preProcess(text);
+    expect(result).toBe(check);
+  });
+});
 
 describe("getIndex", () => {
   test("return the index of the key when it's found", () => {
