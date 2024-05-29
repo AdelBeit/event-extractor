@@ -59,4 +59,17 @@ function changeSelectedWeek(fileName) {
   allExtractedWeeks[fileName].forEach((event, _i) => {
     updateDayCard(event, _i);
   });
+  displayImage(fileName);
+}
+
+function initImageReader() {
+  imageReader = new FileReader();
+  imageReader.onload = function () {
+    let dataURL = imageReader.result;
+    document.querySelector("img.original").src = dataURL;
+  };
+}
+
+function displayImage(fileName) {
+  imageReader.readAsDataURL(imageFiles[fileName]);
 }
