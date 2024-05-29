@@ -16,8 +16,12 @@ function toggleButtonUIHandler(button) {
 }
 
 function updateStage(newStage) {
-  document.querySelector(`#${stage}-stage`).classList.toggle("hidden");
-  document.querySelector(`#${newStage}-stage`).classList.toggle("hidden");
+  [...document.querySelectorAll(`.${stage}-stage`)].map((node) =>
+    node.classList.toggle("hidden")
+  );
+  [...document.querySelectorAll(`.${newStage}-stage`)].map((node) =>
+    node.classList.toggle("hidden")
+  );
   stage = newStage;
 }
 

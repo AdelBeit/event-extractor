@@ -30,7 +30,7 @@
       <div class="heading flex justify-between pt-6">
         <h1 class="text-3xl font-bold">Calenderizer 3000</h1>
         <button
-          class="hidden size-20 bg-green-500"
+          class="review-stage size-20 bg-green-500 hidden"
           name="download"
           onclick="download()"
         >
@@ -38,7 +38,7 @@
         </button>
       </div>
 
-      <div id="upload-stage" class="flex flex-col gap-4 basis-full mt-[8rem]">
+      <div class="upload-stage flex flex-col gap-4 basis-full mt-[8rem]">
         <h4 class="text-xl font-bold">
           How to add Starbucks work schedule to your calendar
         </h4>
@@ -62,8 +62,7 @@
         </div>
       </div>
       <div
-        id="recognition-stage"
-        class="hidden flex flex-col basis-full justify-center gap-4"
+        class="recognition-stage hidden flex flex-col basis-full justify-center gap-4"
       >
         <div
           id="log"
@@ -79,10 +78,7 @@
           anyone.
         </p>
       </div>
-      <div
-        id="review-stage"
-        class="hidden flex flex-col laptop:flex-row basis-full"
-      >
+      <div class="review-stage hidden flex flex-col laptop:flex-row basis-full">
         <div class="flex flex-col laptop:basis-1/2">
           <p class="w-full">Original Screenshot</p>
           <img class="original" aria-label="original screenshot" />
