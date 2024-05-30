@@ -35,9 +35,7 @@ function getIndex(text, key) {
  */
 function process(ocrText) {
   missingKeywordsInOCR = [];
-  log(ocrText);
   let text = preProcess(ocrText);
-  log(text);
   let matchOrder = ["week", "mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   let keywordIndices = [];
   let extractedInfo = [];
