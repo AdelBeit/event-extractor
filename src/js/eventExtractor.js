@@ -79,6 +79,7 @@ function process(ocrText) {
     let dayExerpt = extractedInfo[i];
     let dayOfTheWeek = getDay(dayExerpt).toLowerCase();
     if (missingKeywordsInOCR.includes(dayOfTheWeek)) continue;
+    let isShift = isShift(dayExerpt);
     let event = {
       day: dayOfTheWeek,
       date: daysInWeek[i],
@@ -87,7 +88,7 @@ function process(ocrText) {
       location: "",
       isShift: false,
     };
-    if (isShift(dayExerpt)) {
+    if (isShift) {
       let shift = getShift(dayExerpt);
       let storeInfo = getStoreInfo(dayExerpt);
       let shiftDuration = getShiftDuration(shift).toFixed(2);
@@ -100,7 +101,7 @@ function process(ocrText) {
         isShift: true,
       };
     }
-    log("event", event);
+    event.isSelected = isShift;
     extractedEvents.push(event);
   }
   return extractedEvents;

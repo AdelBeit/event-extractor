@@ -1,33 +1,30 @@
 /* eventObject: {day,date,shift,duration,location} */
-function createDayCard(eventObject) {
+function createDayCards(numCards) {
   let eventsContainer = document.querySelector("div.extracted-events");
-  let cardTemplate = eventsContainer.querySelector("div.template");
+  let cardTemplate = eventsContainer.querySelector(
+    "div.events-day-container.template"
+  );
+  if (eventsContainer.childElementCount === numCards) return;
+  if (!cardTemplate)
+    console.log(
+      "error: card template has been removed, but there aren't enough cards present"
+    );
   let newCard = cardTemplate.cloneNode(true);
-  eventObject.date = new Date(eventObject.date).getDate();
-  let { isShift } = eventObject;
-  Object.entries(eventObject).forEach(([key, val], _i) => {
-    if (key !== "isShift")
-      newCard.querySelector(`.events-${key}`).textContent = val;
+  newCard.classList.remove("template");
+  Array(numCards).forEach((n, _i) => {
+    eventsContainer.appendChild(newCard);
   });
-  if (isShift) {
-    newCard.querySelector(".events-shift").textContent =
-      eventObject.shift.replace("-", " - ");
-    newCard.querySelector(".events-shift-info").classList.remove("hidden");
-    newCard.querySelector(".events-no-shift").classList.add("hidden");
-    newCard.setAttribute("data-noShift", false);
-  }
-  eventsContainer.appendChild(newCard);
+  eventsContainer.removeChild(cardTemplate);
 }
 
 function updateDayCard(event, index) {
-  event = { ...event };
+  let { isShift, isSelected, ...event } = { ...event };
   let eventContainer = document.querySelectorAll(
     ".extracted-events .events-day-container"
   )[index];
-  let { isShift } = event;
   event.date = new Date(event.date).getDate();
+  console.log(isShift, isSelected, event);
   for (let [key, value] of Object.entries(event)) {
-    if (key === "isShift") continue;
     eventContainer.querySelector(`.events-${key}`).textContent = value;
   }
   if (isShift) {
@@ -37,12 +34,14 @@ function updateDayCard(event, index) {
       .querySelector(".events-shift-info")
       .classList.remove("hidden");
     eventContainer.querySelector(".events-no-shift").classList.add("hidden");
-    eventContainer.setAttribute("data-noShift", false);
+    eventContainer.classList.add("selected");
   } else {
     eventContainer.querySelector(".events-shift-info").classList.add("hidden");
     eventContainer.querySelector(".events-no-shift").classList.remove("hidden");
-    eventContainer.setAttribute("data-noShift", true);
+    eventContainer.classList.remove("selected");
   }
+  eventContainer.setAttribute("data-noShift", !isShift);
+  eventContainer.setAttribute("disabled", !isShift || !isSelected);
 }
 
 function createEventWeek(weekEvents, fileName) {
@@ -72,4 +71,19 @@ function initImageReader() {
 
 function displayImage(fileName) {
   imageReader.readAsDataURL(imageFiles[fileName]);
+}
+
+function initCheckBoxes() {
+  let eventCards = document.querySelectorAll("div.events-day-container");
+  [...eventCards].map((card,_i) => {
+    let checkBox = card.querySelector("input");
+    checkBox.addEventListener("change", () => {
+      allExtractedWeeks[selectedWeek][i].isSelected = checkBox.value;
+      card.classList.toggle("selected");
+      card.toggleAttribute(disabled);
+    });
+    card.addEventListener("onclick", () => {
+      checkBox.dispatchEvent(new Event("change"));
+    });
+  });
 }

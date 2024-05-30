@@ -8,6 +8,7 @@ var imageFiles = {};
 var imageReader;
 
 function __main__() {
+  updateStage("review");
   initTesseractScheduler();
   initImageReader();
   var input = document.querySelector(".upload-button input");
@@ -61,11 +62,6 @@ function __main__() {
   });
 }
 
-// download
-function download() {
-  cal.download("shift-schedule");
-}
-
 function publishResults(data) {
   let fileNames = Object.keys(data);
   for (let i = fileNames.length - 1; i >= 0; i--) {
@@ -76,6 +72,7 @@ function publishResults(data) {
     allExtractedWeeks[fileName] = extractedEvents;
     createEventWeek(extractedEvents, fileName);
   }
+  createDayCards(allExtractedWeeks[0].length);
   selectedWeek = fileNames[0];
   changeSelectedWeek(selectedWeek);
   const weekSelector = document.querySelector("select.week-selector");

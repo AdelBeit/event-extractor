@@ -56,3 +56,8 @@ body {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
+
+.selected{
+  background-color: gray;
+  color:darkgray;
+}
