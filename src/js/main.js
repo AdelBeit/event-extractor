@@ -81,12 +81,7 @@ function publishResults(data) {
   const weekSelector = document.querySelector("select.week-selector");
   weekSelector.value = selectedWeek;
   // Trigger the change event to notify any additional listeners
-  weekSelector.dispatchEvent(
-    new Event("change", {
-      bubbles: true,
-      cancelable: true,
-    })
-  );
+  weekSelector.dispatchEvent(new Event("change"));
 
   updateStage("review");
 }
