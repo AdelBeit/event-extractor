@@ -47,9 +47,10 @@ function getProgressMessages() {
 
 function updateProgress(messages) {
   var message = messages.pop();
-  let log = document.querySelector("#log");
+  let log = document.querySelector("#progress-bar");
   log.querySelector("label").textContent = message;
   let waitTime = Math.random() * 2000 + 2500;
+  animateProgressBar();
   let interval = setInterval(() => {
     message = messages.pop();
     dots = "";
@@ -62,7 +63,7 @@ function updateProgress(messages) {
   let dots = "";
   let elipsesInterval = setInterval(() => {
     dots = dots === "..." ? "" : dots + ".";
-    document.querySelector("#log label").textContent = message + dots;
+    document.querySelector("#progress-bar label").textContent = message + dots;
     if (stage !== "recognition") {
       clearInterval(elipsesInterval);
     }
@@ -94,7 +95,25 @@ function stopwatchDecorator(functionToBeTimed) {
   const duration = Math.round((endTime - startTime) / 1000);
   const timerLabel = document.createElement("div");
   timerLabel.textContent = `Recognition completed in ${duration} seconds`;
-  document.querySelector("#log").appendChild(timerLabel);
+  document.querySelector("#progress-bar").appendChild(timerLabel);
+}
+
+function animateProgressBar() {
+  const numFiles = Object.keys(imageFiles).length / 2;
+  const duration = Math.ceil(numFiles) * 3 * 1000;
+  const loadingBar = document.querySelector("#progress-bar .loading-bar");
+  const startTime = performance.now();
+  function update(currentTime) {
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / duration, 1) * 100;
+    if (Math.random() >= 0.9) loadingBar.style.width = progress + "%";
+    if (progress < 100) {
+      requestAnimationFrame(update);
+    } else {
+      loadingBar.style.width = 100 + "%";
+    }
+  }
+  requestAnimationFrame(update);
 }
 
 fileLoadedCheck();
