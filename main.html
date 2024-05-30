@@ -15,11 +15,13 @@
         script.src = "src/js/tesseract.min.js";
         document.head.appendChild(script);
       }
-      if (!window.Tesseract) loadFallbackTesseract();
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"
       onerror="loadFallbackTesseract()"></script>
+    <script>
+      if (!window.Tesseract) loadFallbackTesseract();
+    </script>
     <script src="src/js/utils.js"></script>
   </head>
   <body class="flex justify-center">
