@@ -28,6 +28,8 @@ async function initTesseractScheduler() {
 }
 
 function initRecognition(files) {
+  // init imagefiles with number of files for calculating loading time
+  [...files].map((f, _i) => (imageFiles[_i] = undefined));
   updateStage("recognition");
   updateProgress(getProgressMessages());
   try {

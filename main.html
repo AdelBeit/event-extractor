@@ -79,7 +79,7 @@
             anyone.
           </p>
         </div>
-        <div class="review-stage flex flex-col mt-8">
+        <div class="review-stage hidden flex flex-col mt-8">
           <div
             class="flex justify-between laptop:mb-2 text-lg laptop:text-xl font-medium laptop:font-normal p-2 laptop:p-0 [--button-toggle-track-size:30px] laptop:[--button-toggle-track-size:60px] [--button-toggle-size:15px] laptop:[--button-toggle-size:30px]">
             <div class="basis-1/2 flex justify-start">
@@ -87,9 +87,9 @@
               <button
                 class="laptop:hidden block show-original toggle-button cursor-pointer group w-full flex gap-2 items-center">
                 <div
-                  class="inline-block w-[var(--button-toggle-track-size)] h-[var(--button-toggle-size)] bg-dark-gray group-[.active]:bg-accent-green rounded-[var(--button-toggle-size)] relative border-0 outline-none transition-colors">
+                  class="inline-block w-[var(--button-toggle-track-size)] h-[var(--button-toggle-size)] bg-dark-gray group-[&[active]]:bg-accent-green rounded-[var(--button-toggle-size)] relative border-0 outline-none transition-colors">
                   <div
-                    class="container absolute top-0 left-0 toggle-circle size-[var(--button-toggle-size)] rounded-full bg-white group-[.active]:translate-x-[var(--button-toggle-size)] transition-transform"></div>
+                    class="container absolute top-0 left-0 toggle-circle size-[var(--button-toggle-size)] rounded-full bg-white group-[&[active]]:translate-x-[var(--button-toggle-size)] transition-transform"></div>
                 </div>
                 <span>Show original</span>
               </button>
@@ -99,9 +99,9 @@
               <button
                 class="edit toggle-button cursor-pointer group flex gap-2 items-center">
                 <div
-                  class="inline-block w-[var(--button-toggle-track-size)] h-[var(--button-toggle-size)] bg-dark-gray group-[.active]:bg-accent-green rounded-[var(--button-toggle-size)] relative border-0 outline-none transition-colors">
+                  class="inline-block w-[var(--button-toggle-track-size)] h-[var(--button-toggle-size)] bg-dark-gray group-[&[active]]:bg-accent-green rounded-[var(--button-toggle-size)] relative border-0 outline-none transition-colors">
                   <div
-                    class="container absolute top-0 left-0 toggle-circle size-[var(--button-toggle-size)] rounded-full bg-white group-[.active]:translate-x-[var(--button-toggle-size)] transition-transform"></div>
+                    class="container absolute top-0 left-0 toggle-circle size-[var(--button-toggle-size)] rounded-full bg-white group-[&[active]]:translate-x-[var(--button-toggle-size)] transition-transform"></div>
                 </div>
                 <span>Edit mode</span>
               </button>
@@ -119,11 +119,9 @@
               <select
                 class="week-selector bg-accent-green h-[80px] w-full text-white text-center style-dropdown-icon focus-visible:outline-none"></select>
               <div
-                class="extracted-events bg-gray flex flex-col gap-4 p-2 group justify-center">
+                class="extracted-events bg-gray flex flex-col gap-4 p-2 justify-center">
                 <div
-                  class="events-day-container template min-h-[100px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-                  data-noshift="true"
-                  data-selected="false">
+                  class="events-day-container template min-h-[100px] rounded-lg border-2 border-dark-gray [&[isSelected]]:border-0 [&[isSelected]]:drop-shadow-md bg-gray [&[isSelected]]:bg-white text-dark-gray [&[isSelected]]:text-black flex items-center gap-4 p-4 py-2 group">
                   <div class="flex flex-col gap-1 py-2">
                     <span class="events-day first-letter:capitalize"></span>
                     <div
@@ -139,7 +137,7 @@
                     </div>
                     <span class="events-location capitalize"></span>
                   </div>
-                  <div class="flex items-center justify-center h-full">
+                  <div class="hidden group-[&[isShift]]:flex items-center justify-center h-full">
                     <input
                       type="checkbox"
                       value=""

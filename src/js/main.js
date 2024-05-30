@@ -69,13 +69,10 @@ function __main__() {
   });
 }
 
-// download
-function download() {
-  cal.download("shift-schedule");
-}
-
 function publishResults(data) {
   let fileNames = Object.keys(data);
+  const weekSelector = document.querySelector("select.week-selector");
+  weekSelector.innerHTML = ""; // clear selector
   for (let i = fileNames.length - 1; i >= 0; i--) {
     let fileName = fileNames[i];
     let extractedData = data[fileName];
@@ -84,8 +81,8 @@ function publishResults(data) {
     allExtractedWeeks[fileName] = extractedEvents;
     createEventWeek(extractedEvents, fileName);
   }
+  createDayCards(allExtractedWeeks[0].length);
   selectedWeek = fileNames[0];
-  const weekSelector = document.querySelector("select.week-selector");
   weekSelector.value = selectedWeek;
   // Trigger the change event to notify any additional listeners
   weekSelector.dispatchEvent(new Event("change"));

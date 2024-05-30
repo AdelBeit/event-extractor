@@ -13,7 +13,7 @@ function log(...args) {
 }
 
 function toggleButtonUIHandler(button) {
-  button.classList.toggle("active");
+  button.toggleAttribute('active');
 }
 
 function toggleOriginal(){
