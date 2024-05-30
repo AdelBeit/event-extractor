@@ -5,12 +5,7 @@
     <title>Tesseract.js OCR demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" rel="stylesheet" href="dist/global.css" />
-    <script
-      src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"
-      onerror="loadFallbackTesseract()"
-    ></script>
     <script>
-      if (!window.Tesseract) loadFallbackTesseract();
       function loadFallbackTesseract() {
         if (window.Tesseract) {
           console.log("Tesseract already loaded");
@@ -20,7 +15,11 @@
         script.src = "src/js/tesseract.min.js";
         document.head.appendChild(script);
       }
+      if (!window.Tesseract) loadFallbackTesseract();
     </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"
+      onerror="loadFallbackTesseract()"></script>
     <script src="src/js/utils.js"></script>
   </head>
   <body class="flex justify-center">
