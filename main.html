@@ -66,13 +66,14 @@
         class="recognition-stage hidden flex flex-col basis-full justify-center gap-4"
       >
         <div
-          id="log"
-          class="w-full h-[90px] rounded-2xl border-[8px] border-accent-green flex px-4"
-        >
+          id="progress-bar"
+          class="w-full h-[90px] rounded-2xl border-[8px] border-accent-green flex px-4 relative overflow-hidden">
           <label
-            class="self-center leading-tight uppercase text-accent-green text-2xl text-nowrap"
+            class="absolute self-center leading-tight uppercase text-accent-green text-2xl text-nowrap z-[2]"
             >Loading...</label
           >
+          <div
+            class="absolute loading-bar z-0 h-full w-0 left-0 bg-dark-house-green transition-all"></div>
         </div>
         <p class="disclaimer">
           everything is done on your device and no information is shared with
