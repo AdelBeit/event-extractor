@@ -1,6 +1,14 @@
 async function initTesseractScheduler() {
+  if (!window.Tesseract) {
+    const tesseractTimeout = setTimeout(() => {
+      console.log("Tesseract not loaded, reloading...");
+      clearTimeout(tesseractTimeout);
+      initTesseractScheduler();
+    }, 500);
+    return;
+  }
   if (scheduler) {
-    console.log("scheduler already initialized");
+    console.log("Scheduler already initialized");
     return;
   }
   /* scheudler */
