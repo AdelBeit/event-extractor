@@ -57,7 +57,7 @@ body {
   print-color-adjust: exact;
 }
 
-.selected{
+.selected {
   background-color: gray;
   color:darkgray;
 }
