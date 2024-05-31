@@ -8,7 +8,7 @@ var imageFiles = {};
 var imageReader;
 
 function __main__() {
-  updateStage("review");
+  updateStage("upload");
   initTesseractScheduler();
   initImageReader();
   var input = document.querySelector(".upload-button input");
