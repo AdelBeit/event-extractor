@@ -77,7 +77,6 @@ function publishResults(data) {
     createEventWeek(extractedEvents, fileName);
   }
   selectedWeek = fileNames[0];
-  changeSelectedWeek(selectedWeek);
   const weekSelector = document.querySelector("select.week-selector");
   weekSelector.value = selectedWeek;
   // Trigger the change event to notify any additional listeners
