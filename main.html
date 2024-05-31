@@ -28,256 +28,122 @@
     <main class="h-full overflow-y-scroll">
       <div
         class="relative m-auto flex flex-col px-2 laptop:px-12 pb-2 min-h-fit max-w-[1000px] lg:border-x-4 border-dark-green">
-      <div class="heading flex justify-between pt-6">
-        <h1 class="text-3xl font-bold">Calenderizer 3000</h1>
-        <button
-          class="review-stage size-20 bg-green-500 hidden"
-          name="download"
-          onclick="download()"
-        >
-          download
-        </button>
-      </div>
+        <div class="heading flex justify-between pt-6">
+          <h1 class="text-3xl font-bold">Calenderizer 3000</h1>
+          <button
+            class="review-stage size-20 hidden bg-accent-green hover:bg-house-green text-white rounded-lg p-1"
+            name="download"
+            onclick="download()">
+            download
+          </button>
+        </div>
 
-      <div class="upload-stage flex flex-col gap-4 basis-full mt-[8rem]">
-        <h4 class="text-xl font-bold">
-          How to add Starbucks work schedule to your calendar
-        </h4>
-        <ol class="list-decimal list-inside">
-          <li>Upload a schedule screenshot from the partner app</li>
-          <li>Download the generated .ics file with your shifts as events</li>
-          <li>Import the .ics file into your favorite calendar</li>
-        </ol>
-        <p class="disclaimer">
-          everything is done on your device and no information is shared with
-          anyone.
-        </p>
-        <div class="upload-button flex justify-center basis-full pt-[10rem]">
-          <input
-            type="file"
-            name="screenshot-input"
-            accept="image/*"
-            class="block w-fit text-sm text-gray h-[60px] rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xl file:font-semibold file:bg-accent-green hover:file:bg-house-green file:w-full file:h-full file:text-white"
-            multiple
-          />
+        <div class="upload-stage flex flex-col gap-4 basis-full mt-[8rem]">
+          <h4 class="text-xl font-bold">
+            How to add Starbucks work schedule to your calendar
+          </h4>
+          <ol class="list-decimal list-inside">
+            <li>Upload a schedule screenshot from the partner app</li>
+            <li>Download the generated .ics file with your shifts as events</li>
+            <li>Import the .ics file into your favorite calendar</li>
+          </ol>
+          <p class="disclaimer">
+            everything is done on your device and no information is shared with
+            anyone.
+          </p>
+          <div class="upload-button flex justify-center basis-full pt-[10rem]">
+            <input
+              type="file"
+              name="screenshot-input"
+              accept="image/*"
+              class="block w-fit text-sm text-gray h-[60px] rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:w-full file:h-full file:text-xl file:font-semibold file:bg-accent-green hover:file:bg-house-green file:text-white file:disabled:bg-dark-gray file:disabled:text-gray"
+              multiple
+              disabled />
+          </div>
         </div>
-      </div>
-      <div
-        class="recognition-stage hidden flex flex-col basis-full justify-center gap-4"
-      >
         <div
-          id="progress-bar"
-          class="w-full h-[90px] rounded-2xl border-[8px] border-accent-green flex px-4 relative overflow-hidden">
-          <label
-            class="absolute self-center leading-tight uppercase text-accent-green text-2xl text-nowrap z-[2]"
-            >Loading...</label
-          >
+          class="recognition-stage hidden flex flex-col basis-full justify-center gap-4">
           <div
-            class="absolute loading-bar z-0 h-full w-0 left-0 bg-dark-house-green transition-all"></div>
+            id="progress-bar"
+            class="w-full h-[90px] rounded-2xl border-[8px] border-accent-green flex px-4 relative overflow-hidden">
+            <label
+              class="absolute self-center leading-tight uppercase text-accent-green text-2xl text-nowrap z-[2]"
+              >Loading...</label
+            >
+            <div
+              class="absolute loading-bar z-0 h-full w-0 left-0 bg-dark-house-green transition-all"></div>
+          </div>
+          <p class="disclaimer">
+            everything is done on your device and no information is shared with
+            anyone.
+          </p>
         </div>
-        <p class="disclaimer">
-          everything is done on your device and no information is shared with
-          anyone.
-        </p>
-      </div>
-      <div class="review-stage hidden flex flex-col laptop:flex-row basis-full">
-        <div class="flex flex-col laptop:basis-1/2">
-          <p class="w-full">Original Screenshot</p>
-          <img class="original" aria-label="original screenshot" />
-        </div>
-        <div class="flex flex-col laptop:basis-1/2">
-          <div class="flex justify-between mb-2">
-            <p>Extracted Events</p>
-            <div class="flex gap-6">
-              <button
-                class="edit toggle-button cursor-pointer group w-full flex gap-2 items-center"
-              >
-                <div
-                  class="inline-block w-[30px] h-[15px] bg-dark-gray group-[.active]:bg-accent-green rounded-[15px] relative border-0 outline-none transition-colors"
-                >
+        <div
+          class="review-stage hidden flex flex-col laptop:flex-row basis-full">
+          <div class="flex flex-col laptop:basis-1/2">
+            <p class="w-full">Original Screenshot</p>
+            <img class="original" aria-label="original screenshot" />
+          </div>
+          <div class="flex flex-col laptop:basis-1/2">
+            <div class="flex justify-between mb-2">
+              <p>Extracted Events</p>
+              <div class="flex gap-6">
+                <button
+                  class="edit toggle-button cursor-pointer group w-full flex gap-2 items-center">
                   <div
-                    class="container absolute top-0 left-0 toggle-circle size-[15px] rounded-full bg-white group-[.active]:translate-x-[15px] transition-transform"
-                  ></div>
-                </div>
-                <span>Edit mode</span>
-              </button>
-            </div>
-          </div>
-          <select
-            class="week-selector bg-accent-green h-[60px] text-white text-center style-dropdown-icon focus-visible:outline-none"
-          ></select>
-          <div
-            class="extracted-events bg-gray flex flex-col gap-4 p-2 group justify-center"
-          >
-            <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
-                <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
-              <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
-                </div>
-                <span class="events-location capitalize"></span>
+                    class="inline-block w-[30px] h-[15px] bg-dark-gray group-[.active]:bg-accent-green rounded-[15px] relative border-0 outline-none transition-colors">
+                    <div
+                      class="container absolute top-0 left-0 toggle-circle size-[15px] rounded-full bg-white group-[.active]:translate-x-[15px] transition-transform"></div>
+                  </div>
+                  <span>Edit mode</span>
+                </button>
               </div>
             </div>
+            <select
+              class="week-selector bg-accent-green h-[60px] text-white text-center style-dropdown-icon focus-visible:outline-none"></select>
             <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
-                <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
+              class="extracted-events bg-gray flex flex-col gap-4 p-2 group justify-center">
               <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
+                class="events-day-container template min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
+                data-noshift="true"
+                data-selected="false">
+                <div class="flex flex-col gap-1 py-2">
+                  <span class="events-day first-letter:capitalize"></span>
+                  <div
+                    class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"></div>
                 </div>
-                <span class="events-location capitalize"></span>
-              </div>
-            </div>
-            <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
+                <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
+                <span class="events-no-shift w-full">- No Shift -</span>
                 <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
-              <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
+                  class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden">
+                  <div class="flex justify-between">
+                    <span class="events-shift"></span>
+                    <span><span class="events-duration"></span> hrs</span>
+                  </div>
+                  <span class="events-location capitalize"></span>
                 </div>
-                <span class="events-location capitalize"></span>
-              </div>
-            </div>
-            <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
-                <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
-              <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
+                <div class="flex items-center justify-center h-full">
+                  <input
+                    type="checkbox"
+                    value=""
+                    aria-label="select card for export" />
                 </div>
-                <span class="events-location capitalize"></span>
-              </div>
-            </div>
-            <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
-                <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
-              <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
-                </div>
-                <span class="events-location capitalize"></span>
-              </div>
-            </div>
-            <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
-                <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
-              <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
-                </div>
-                <span class="events-location capitalize"></span>
-              </div>
-            </div>
-            <div
-              class="events-day-container min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-              data-noshift="true"
-            >
-              <div class="flex flex-col gap-1 py-2">
-                <span class="events-day first-letter:capitalize"></span>
-                <div
-                  class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"
-                ></div>
-              </div>
-              <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-              <span class="events-no-shift w-full">- No Shift -</span>
-              <div
-                class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden"
-              >
-                <div class="flex justify-between">
-                  <span class="events-shift"></span>
-                  <span><span class="events-duration"></span> hrs</span>
-                </div>
-                <span class="events-location capitalize"></span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div id="footer" class="text-center">
-        <div class="btn-container absolute bottom-6 right-10 animate__pulse">
-          <a
-            title="Support me on ko-fi.com"
-            class="kofi-button w-fit h-fit"
-            href="https://ko-fi.com/X8X1YELWX"
-            target="_blank"
-            ><img
-              src="assets/images/kofi.webp"
-              alt="Ko-fi donations"
-              class="kofiimg max-h-12"
-          /></a>
+        <div id="footer" class="text-center">
+          <div class="btn-container absolute bottom-6 right-10 animate__pulse">
+            <a
+              title="Support me on ko-fi.com"
+              class="kofi-button w-fit h-fit"
+              href="https://ko-fi.com/X8X1YELWX"
+              target="_blank"
+              ><img
+                src="assets/images/kofi.webp"
+                alt="Ko-fi donations"
+                class="kofiimg max-h-12"
+            /></a>
           </div>
         </div>
       </div>
