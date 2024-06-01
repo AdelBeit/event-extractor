@@ -55,6 +55,13 @@ function __main__() {
     EDIT_MODE = !EDIT_MODE;
   });
 
+  const showOriginalButton = document.querySelector("button.toggle-button.show-original");
+  showOriginalButton.addEventListener("click", (e) => {
+    toggleButtonUIHandler(showOriginalButton);
+    toggleOriginal();
+    SHOW_ORIGINAL = !SHOW_ORIGINAL;
+  });
+
   const weekSelector = document.querySelector("select.week-selector");
   weekSelector.addEventListener("change", () => {
     var selectedValue = weekSelector.value;

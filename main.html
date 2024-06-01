@@ -24,10 +24,10 @@
     </script>
     <script src="src/js/utils.js"></script>
   </head>
-  <body>
-    <main class="h-full overflow-y-scroll">
+  <body class="relative">
+    <main class="min-h-fit h-full overflow-y-scroll">
       <div
-        class="relative m-auto flex flex-col px-2 laptop:px-12 pb-2 min-h-fit max-w-[1000px] lg:border-x-4 border-dark-green">
+        class="m-auto px-2 laptop:px-12 pb-2 h-fit min-h-full max-w-[1000px] lg:border-x-4 border-dark-green">
         <div class="heading flex justify-between pt-6">
           <h1 class="text-3xl font-bold">Calenderizer 3000</h1>
           <button
@@ -38,7 +38,7 @@
           </button>
         </div>
 
-        <div class="upload-stage flex flex-col gap-4 basis-full mt-[8rem]">
+        <div class="upload-stage hidden flex flex-col gap-4 mt-[8rem]">
           <h4 class="text-xl font-bold">
             How to add Starbucks work schedule to your calendar
           </h4>
@@ -51,7 +51,7 @@
             everything is done on your device and no information is shared with
             anyone.
           </p>
-          <div class="upload-button flex justify-center basis-full pt-[10rem]">
+          <div class="upload-button flex justify-center pt-[10rem]">
             <input
               type="file"
               name="screenshot-input"
@@ -62,7 +62,7 @@
           </div>
         </div>
         <div
-          class="recognition-stage hidden flex flex-col basis-full justify-center gap-4">
+          class="recognition-stage hidden flex flex-col justify-center gap-4 mt-[20rem]">
           <div
             id="progress-bar"
             class="w-full h-[90px] rounded-2xl border-[8px] border-accent-green flex px-4 relative overflow-hidden">
@@ -78,73 +78,87 @@
             anyone.
           </p>
         </div>
-        <div
-          class="review-stage hidden flex flex-col laptop:flex-row basis-full">
-          <div class="flex flex-col laptop:basis-1/2">
-            <p class="w-full">Original Screenshot</p>
-            <img class="original" aria-label="original screenshot" />
-          </div>
-          <div class="flex flex-col laptop:basis-1/2">
-            <div class="flex justify-between mb-2">
-              <p>Extracted Events</p>
-              <div class="flex gap-6">
-                <button
-                  class="edit toggle-button cursor-pointer group w-full flex gap-2 items-center">
-                  <div
-                    class="inline-block w-[30px] h-[15px] bg-dark-gray group-[.active]:bg-accent-green rounded-[15px] relative border-0 outline-none transition-colors">
-                    <div
-                      class="container absolute top-0 left-0 toggle-circle size-[15px] rounded-full bg-white group-[.active]:translate-x-[15px] transition-transform"></div>
-                  </div>
-                  <span>Edit mode</span>
-                </button>
-              </div>
-            </div>
-            <select
-              class="week-selector bg-accent-green h-[60px] text-white text-center style-dropdown-icon focus-visible:outline-none"></select>
-            <div
-              class="extracted-events bg-gray flex flex-col gap-4 p-2 group justify-center">
-              <div
-                class="events-day-container template min-h-[80px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
-                data-noshift="true"
-                data-selected="false">
-                <div class="flex flex-col gap-1 py-2">
-                  <span class="events-day first-letter:capitalize"></span>
-                  <div
-                    class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"></div>
-                </div>
-                <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
-                <span class="events-no-shift w-full">- No Shift -</span>
+        <div class="review-stage flex flex-col border border-red-400 mt-8">
+          <div class="flex justify-between mb-2 text-xl p-2 laptop:p-0 ">
+            <div class="basis-1/2 flex justify-start">
+              <p class="laptop:block hidden">Original Screenshot</p>
+              <button
+                class="laptop:hidden block show-original toggle-button cursor-pointer group w-full flex gap-2 items-center font-medium">
                 <div
-                  class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden">
-                  <div class="flex justify-between">
-                    <span class="events-shift"></span>
-                    <span><span class="events-duration"></span> hrs</span>
-                  </div>
-                  <span class="events-location capitalize"></span>
+                  class="inline-block w-[60px] h-[30px] bg-dark-gray group-[.active]:bg-accent-green rounded-[30px] relative border-0 outline-none transition-colors">
+                  <div
+                    class="container absolute top-0 left-0 toggle-circle size-[30px] rounded-full bg-white group-[.active]:translate-x-[30px] transition-transform"></div>
                 </div>
-                <div class="flex items-center justify-center h-full">
-                  <input
-                    type="checkbox"
-                    value=""
-                    aria-label="select card for export" />
+                <span>Show original</span>
+              </button>
+            </div>
+            <div class="basis-1/2 flex justify-end laptop:justify-between">
+              <p class="laptop:block hidden">Extracted Events</p>
+              <button
+                class="edit toggle-button cursor-pointer group flex gap-2 items-center font-medium">
+                <div
+                  class="inline-block w-[60px] h-[30px] bg-dark-gray group-[.active]:bg-accent-green rounded-[30px] relative border-0 outline-none transition-colors">
+                  <div
+                    class="container absolute top-0 left-0 toggle-circle size-[30px] rounded-full bg-white group-[.active]:translate-x-[30px] transition-transform"></div>
+                </div>
+                <span>Edit mode</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="relative flex">
+            <div class="original-events-container hidden laptop:block laptop:basis-1/2 laptop:relative absolute inset-x-0 border-8 z-[2] border-house-green">
+              <img
+                class="max-h-full max-w-full"
+                aria-label="original screenshot" />
+            </div>
+            <div class="flex-1 laptop:basis-1/2 flex flex-col">
+              <select
+                class="week-selector bg-accent-green h-[80px] w-full text-white text-center style-dropdown-icon focus-visible:outline-none"></select>
+              <div
+                class="extracted-events bg-gray flex flex-col gap-4 p-2 group justify-center">
+                <div
+                  class="events-day-container template min-h-[100px] rounded-lg drop-shadow-md bg-white flex items-center gap-4 p-4 py-2"
+                  data-noshift="true"
+                  data-selected="false">
+                  <div class="flex flex-col gap-1 py-2">
+                    <span class="events-day first-letter:capitalize"></span>
+                    <div
+                      class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"></div>
+                  </div>
+                  <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
+                  <span class="events-no-shift w-full">- No Shift -</span>
+                  <div
+                    class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden">
+                    <div class="flex justify-between">
+                      <span class="events-shift"></span>
+                      <span><span class="events-duration"></span> hrs</span>
+                    </div>
+                    <span class="events-location capitalize"></span>
+                  </div>
+                  <div class="flex items-center justify-center h-full">
+                    <input
+                      type="checkbox"
+                      value=""
+                      aria-label="select card for export" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div id="footer" class="text-center">
-          <div class="btn-container absolute bottom-6 right-10 animate__pulse">
-            <a
-              title="Support me on ko-fi.com"
-              class="kofi-button w-fit h-fit"
-              href="https://ko-fi.com/X8X1YELWX"
-              target="_blank"
-              ><img
-                src="assets/images/kofi.webp"
-                alt="Ko-fi donations"
-                class="kofiimg max-h-12"
-            /></a>
-          </div>
+        <div
+          class="btn-container absolute bottom-6 right-6 laptop:right-[12.5rem] animate__pulse">
+          <a
+            title="Support me on ko-fi.com"
+            class="kofi-button w-fit h-fit"
+            href="https://ko-fi.com/X8X1YELWX"
+            target="_blank"
+            ><img
+              src="assets/images/kofi.webp"
+              alt="Ko-fi donations"
+              class="kofiimg max-h-12"
+          /></a>
         </div>
       </div>
     </main>

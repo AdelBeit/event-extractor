@@ -1,6 +1,7 @@
 const LOG_FILE_NAMES = false;
 const DEBUG_MODE = false;
 var EDIT_MODE = false;
+var SHOW_ORIGINAL = false;
 
 function fileLoadedCheck() {
   if (LOG_FILE_NAMES)
@@ -13,6 +14,11 @@ function log(...args) {
 
 function toggleButtonUIHandler(button) {
   button.classList.toggle("active");
+}
+
+function toggleOriginal(){
+  const container = document.querySelector('.original-events-container');
+  container.classList.toggle('hidden');
 }
 
 function updateStage(newStage) {
