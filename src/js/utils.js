@@ -14,12 +14,12 @@ function log(...args) {
 }
 
 function toggleButtonUIHandler(button) {
-  button.toggleAttribute('active');
+  button.toggleAttribute("active");
 }
 
-function toggleOriginal(){
-  const container = document.querySelector('.original-events-container');
-  container.classList.toggle('hidden');
+function toggleOriginal() {
+  const container = document.querySelector(".original-events-container");
+  container.classList.toggle("hidden");
 }
 
 function updateStage(newStage) {
@@ -121,6 +121,10 @@ function animateProgressBar() {
     }
   }
   requestAnimationFrame(update);
+}
+
+function dismiss(node) {
+  node.classList.add("hidden");
 }
 
 fileLoadedCheck();

@@ -68,6 +68,11 @@ function __main__() {
     var selectedValue = weekSelector.value;
     changeSelectedWeek(selectedValue);
   });
+
+  const eventsError = document.querySelector("button.error-events");
+  eventsError.addEventListener("click", () => {
+    dismiss(eventsError);
+  });
 }
 
 function publishResults(data) {

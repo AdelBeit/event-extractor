@@ -12,7 +12,18 @@ function createCal(events) {
 
 // create .ics & download
 function download() {
-  allExtractedWeeks.forEach((weekEvents) => createCal(weekEvents));
+  function handleErrors(msg) {
+    let errorNode = document.querySelector("button.error-events");
+    errorNode.querySelector("span").textContent = msg;
+    errorNode.classList.remove('hidden');
+  }
+  Object.keys(allExtractedWeeks).forEach((week) =>
+    createCal(allExtractedWeeks[week])
+  );
+  if (cal.events().length === 0) {
+    handleErrors('no events selected! Please select at least one event to download.')
+    return;
+  }
   cal.download("shift-schedule");
 }
 
