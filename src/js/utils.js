@@ -1,6 +1,7 @@
 const LOG_FILE_NAMES = false;
 const DEBUG_MODE = false;
 var EDIT_MODE = false;
+var SHOW_EDIT_MODE = false;
 var SHOW_ORIGINAL = false;
 
 function fileLoadedCheck() {

@@ -50,6 +50,7 @@ function __main__() {
   }
 
   const editButton = document.querySelector("button.toggle-button.edit");
+  editButton.classList.add('hidden');
   editButton.addEventListener("click", (e) => {
     toggleButtonUIHandler(editButton);
     EDIT_MODE = !EDIT_MODE;
