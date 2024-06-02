@@ -11,7 +11,6 @@ async function initTesseractScheduler() {
     console.log("Scheduler already initialized");
     return;
   }
-  /* scheudler */
   scheduler = Tesseract.createScheduler();
   const workerGen = async () => {
     const worker = await Tesseract.createWorker("eng", 1);
@@ -25,6 +24,8 @@ async function initTesseractScheduler() {
   }
   await Promise.all(resArr);
   console.log("scheduler initialized");
+  let input = document.querySelector(".upload-button input");
+  input.removeAttribute("disabled");
 }
 
 function initRecognition(files) {
