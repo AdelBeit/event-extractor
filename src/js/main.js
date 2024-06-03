@@ -9,6 +9,7 @@ var imageReader;
 
 function __main__() {
   updateStage("upload");
+  ET("viewed");
   initTesseractScheduler();
   initImageReader();
   var input = document.querySelector(".upload-button input");
@@ -92,7 +93,7 @@ function publishResults(data) {
   weekSelector.value = selectedWeek;
   // Trigger the change event to notify any additional listeners
   weekSelector.dispatchEvent(new Event("change"));
-
+  ET("processed");
   updateStage("review");
 }
 

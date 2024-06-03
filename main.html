@@ -26,8 +26,7 @@
     <script src="src/js/utils.js"></script>
   </head>
   <body class="max-w-[1000px] m-auto relative">
-    <main
-      class="min-h-fit h-full overflow-y-scroll pb-20 laptop:pb-0">
+    <main class="min-h-fit h-full overflow-y-scroll pb-20 laptop:pb-0">
       <div
         class="px-2 laptop:px-12 pb-2 h-fit min-h-full lg:border-x-4 border-dark-green">
         <div class="heading flex justify-between pr-3 laptop:pr-0 pt-6">
@@ -78,7 +77,8 @@
             anyone.
           </p>
         </div>
-        <div class="review-stage flex flex-col mt-8 hidden laptop:m-auto laptop:max-h-[1000px] laptop:max-w-[1000px]">
+        <div
+          class="review-stage flex flex-col mt-8 hidden laptop:m-auto laptop:max-h-[1000px] laptop:max-w-[1000px]">
           <div
             class="flex justify-between laptop:mb-2 text-lg laptop:text-xl font-medium laptop:font-normal p-2 laptop:p-0 [--button-toggle-track-size:30px] laptop:[--button-toggle-track-size:60px] [--button-toggle-size:15px] laptop:[--button-toggle-size:30px]">
             <div class="laptop:basis-1/2 flex justify-start">
@@ -93,7 +93,8 @@
                 <span>Show original</span>
               </button>
             </div>
-            <div class="basis-1/2 hidden laptop:flex justify-end laptop:justify-between">
+            <div
+              class="basis-1/2 hidden laptop:flex justify-end laptop:justify-between">
               <p class="laptop:block hidden">Extracted Events</p>
               <button
                 class="edit toggle-button cursor-pointer group flex gap-2 items-center">
@@ -177,6 +178,9 @@
               class="kofiimg max-h-12"
           /></a>
         </div>
+        <div class="ditto w-0 h-0">
+          <img />
+        </div>
       </div>
     </main>
     <script src="src/js/tesseract-ocr.js"></script>
@@ -184,6 +188,7 @@
     <script src="src/js/eventExtractor.js"></script>
     <script src="src/js/createEvents.js"></script>
     <script src="src/js/displayEvents.js"></script>
+    <script src="src/js/telemetry.js"></script>
     <script src="src/js/main.js"></script>
   </body>
 </html>

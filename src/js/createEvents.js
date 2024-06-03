@@ -24,6 +24,7 @@ function download() {
     handleErrors('no events selected! Please select at least one event to download.')
     return;
   }
+  ET('distributed');
   cal.download("shift-schedule");
 }
 
