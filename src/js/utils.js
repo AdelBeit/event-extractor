@@ -3,6 +3,8 @@ const DEBUG_MODE = false;
 var EDIT_MODE = false;
 var SHOW_EDIT_MODE = false;
 var SHOW_ORIGINAL = false;
+// TODO: check cookie value
+var SEEN_TUTORIAL = false;
 
 function fileLoadedCheck() {
   if (LOG_FILE_NAMES)
@@ -126,5 +128,26 @@ function animateProgressBar() {
 function dismiss(node) {
   node.classList.add("hidden");
 }
+
+function loadTutorial(){
+  if(SEEN_TUTORIAL) return;
+  document.querySelector('div.tutorial-container').classList.toggle('hidden');
+  // set tutorial cookie to true
+  SEEN_TUTORIAL = true;
+}
+
+// cookie management
+var cookieManager = {
+  cookies: { rabbit: "mq", kafka: "manager" },
+  print(name = "") {
+    let entries = Object.entries(this.cookies);
+    if (Object.keys(this.cookies).includes(name))
+      console.log(name, this.cookies[name]);
+    console.log(...entries);
+  },
+  save() {},
+  load() {},
+  delete() {},
+};
 
 fileLoadedCheck();

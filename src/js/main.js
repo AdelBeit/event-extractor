@@ -8,6 +8,7 @@ var imageFiles = {};
 var imageReader;
 
 function __main__() {
+  loadTutorial();
   updateStage("upload");
   ET("viewed");
   initTesseractScheduler();
@@ -50,14 +51,21 @@ function __main__() {
     });
   }
 
+  const tutorialButton = document.querySelector("div.tutorial-container button");
+  tutorialButton.addEventListener("click", () => {
+    dismiss(document.querySelector('div.tutorial-container'));
+  });
+
   const editButton = document.querySelector("button.toggle-button.edit");
-  editButton.classList.add('hidden');
+  editButton.classList.add("hidden");
   editButton.addEventListener("click", (e) => {
     toggleButtonUIHandler(editButton);
     EDIT_MODE = !EDIT_MODE;
   });
 
-  const showOriginalButton = document.querySelector("button.toggle-button.show-original");
+  const showOriginalButton = document.querySelector(
+    "button.toggle-button.show-original"
+  );
   showOriginalButton.addEventListener("click", (e) => {
     toggleButtonUIHandler(showOriginalButton);
     toggleOriginal();
