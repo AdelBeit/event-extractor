@@ -4,7 +4,7 @@ export default defineConfig({
   publicDir: "public",
   root: "./",
   server: {
-    open: "/main.html",
+    open: "/index.html",
   },
   build: {
     outDir: "dist",
