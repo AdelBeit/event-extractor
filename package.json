@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "jest",
-    "tw": "pnpx tailwindcss -i ./src/style/global.css -o ./dist/global.css --watch",
+    "tw": "pnpx tailwindcss -i ./src/style/global.css -o ./src/style/tw-global.css --watch",
     "dev": "vite"
   },
   "keywords": [],
