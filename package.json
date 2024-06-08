@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Uses tesseract OCR ML lib to extract events from an image and create calendar (.ics) file. Text processing logic custom made for starbucks frontline workers' work schedule pictures.",
   "main": "index.html",
+  "packageManager": "pnpm",
   "scripts": {
     "test": "jest",
     "tw": "pnpx tailwindcss -i ./src/style/global.css -o ./src/style/tw-global.css --watch",
