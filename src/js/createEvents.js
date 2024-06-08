@@ -7,7 +7,6 @@ function createEvent(eventObject) {
 function createCal(events) {
   events.forEach((event, _i) => {
     if (event.isSelected && event.isShift) {
-      console.log(event);
       createEvent(event);
     }
   });
