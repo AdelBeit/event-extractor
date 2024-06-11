@@ -21,17 +21,16 @@
   </head>
   <body class="max-w-[1000px] m-auto relative">
     <main class="min-h-fit h-full overflow-y-scroll pb-20 laptop:pb-0">
-      <div
-        class="px-2 laptop:px-12 pb-2 h-fit min-h-full">
+      <div class="px-2 laptop:px-12 pb-2 h-fit min-h-full">
         <div class="heading flex justify-between pr-3 laptop:pr-0 pt-6">
           <h1 class="text-3xl font-bold">Calenderizer 3000</h1>
           <button
-            class="review-stage hidden style-download-icon size-14 bg-accent-green hover:bg-house-green rounded-lg p-1"
+            class="review-stage hidden style-download-icon size-12 tablet:size-14 bg-accent-green hover:bg-house-green rounded-lg p-1"
             name="download"
             onclick="download()"></button>
         </div>
 
-        <div class="upload-stage flex flex-col gap-4 mt-[8rem]">
+        <div class="upload-stage flex flex-col gap-4 mt-[4rem] tablet:mt-[8rem]">
           <h4 class="text-xl font-bold">
             How to add Starbucks work schedule to your calendar
           </h4>
@@ -44,7 +43,7 @@
             everything is done on your device and no information is shared with
             anyone.
           </p>
-          <div class="upload-button flex justify-center pt-[10rem]">
+          <div class="upload-button flex justify-center pt-[6rem] tablet:pt-[10rem]">
             <input
               type="file"
               name="screenshot-input"
@@ -55,18 +54,18 @@
           </div>
         </div>
         <div
-          class="recognition-stage hidden flex flex-col justify-center gap-4 mt-[20rem]">
+          class="recognition-stage hidden flex flex-col justify-center gap-4 mt-[12rem] laptop:mt-[20rem]">
           <div
             id="progress-bar"
-            class="w-full h-[90px] rounded-2xl border-[8px] border-accent-green flex px-4 relative overflow-hidden">
+            class="w-full h-[60px] laptop:h-[90px] rounded-2xl border-[4px] tablet:border-[6px] latptop:border-[8px] border-accent-green flex px-1 mobile:px-2 laptop:px-4 relative overflow-hidden">
             <label
-              class="absolute self-center leading-tight uppercase text-accent-green text-2xl text-nowrap z-[2]"
+              class="absolute self-center leading-tight uppercase text-accent-green text-xs tablet:text-base laptop:text-2xl text-nowrap z-[2]"
               >Loading...</label
             >
             <div
               class="absolute loading-bar z-0 h-full w-0 left-0 bg-dark-house-green transition-all"></div>
           </div>
-          <p class="disclaimer">
+          <p class="disclaimer text-xs tablet:text-base">
             everything is done on your device and no information is shared with
             anyone.
           </p>
@@ -132,7 +131,7 @@
                 class="extracted-events bg-gray flex flex-col gap-4 p-2 justify-center">
                 <div
                   class="events-day-container template min-h-[100px] rounded-lg border-2 border-dark-gray [&[isSelected]]:border-0 [&[isSelected]]:drop-shadow-md bg-gray [&[isSelected]]:bg-white text-dark-gray [&[isSelected]]:text-black flex items-center gap-4 p-4 py-2 group">
-                  <div class="flex flex-col gap-1 py-2">
+                  <div class="flex flex-col gap-1 py-2 items-center">
                     <span class="events-day first-letter:capitalize"></span>
                     <div
                       class="events-date rounded-full border-2 border-house-green size-[30px] flex items-center justify-center"></div>
@@ -140,7 +139,7 @@
                   <div class="w-[2px] h-full bg-dark-gray opacity-[0.2]"></div>
                   <span class="events-no-shift w-full">- No Shift -</span>
                   <div
-                    class="events-shift-info flex flex-col gap-2 w-full max-h-full hidden">
+                    class="events-shift-info flex flex-col justify-between mobile:h-[70%] gap-2 w-full max-h-full hidden">
                     <div class="flex justify-between">
                       <span class="events-shift"></span>
                       <span><span class="events-duration"></span> hrs</span>
@@ -152,7 +151,7 @@
                     <input
                       type="checkbox"
                       value=""
-                      aria-label="select card for export" />
+                      aria-label="select card for export"/>
                   </div>
                 </div>
               </div>
@@ -169,7 +168,7 @@
             ><img
               src="assets/images/kofi.webp"
               alt="Ko-fi donations"
-              class="kofiimg max-h-12"
+              class="kofiimg max-h-9 tablet:max-h-10 laptop:max-h-12"
           /></a>
         </div>
         <div class="ditto w-0 h-0">
