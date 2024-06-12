@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", __main__);
 
+var VIDEO_DEMO_LINK = "https://vimeo.com/956829214";
 var scheduler = undefined;
 var stage = "upload"; // upload | recognition | review
 var allExtractedWeeks = {};
