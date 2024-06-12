@@ -8,7 +8,7 @@
 
 Using it is as easy as uploading a screenshot of your schedule and being prompted to download the calendar events file (*.ics) that you can then import into your favorite calendar (google, outlook, etc...)
 
-[Live demo]([https://adelbeit.com](https://calendarizer.adelbeit.com/)). Currently finishing up some last minute design.
+[Live Demo](https://calendarizer.adelbeit.com/). Currently finishing up some last minute design.
 
 ### MOTIVATION
 
