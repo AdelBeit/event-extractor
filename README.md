@@ -16,18 +16,9 @@ Using it is as easy as uploading a screenshot of your schedule and being prompte
 
 Helping busy frontline workers organize their calendars easier.
 
-### IMPORTANT NOTE
-
--------
-
-All information including screenshots, and schedule info are processed, and handled on your personal device.  No information is shared or sent anywhere. 
-
 Designed to work **offline**.
 
-#### WIP FEATURES:
-
-- ✅ Ability to upload multiple pictures at once
-- ⚒ Ability to edit (heal) portions of schedule the OCR couldn't fully recognize
+**All information including screenshots, and schedule info are processed, and handled on your personal device.  No information is shared or sent anywhere.**
 
 ### TECHNICAL DECISIONS
 
@@ -45,3 +36,10 @@ Although I have to acknowledge that towards the end I have faced difficulties ma
 #### Managing state with nothing but vanilla js 
 
 #### Managing visual UI state with tailwind
+
+
+
+#### WIP FEATURES:
+
+- ✅ Ability to upload multiple pictures at once
+- ⚒ Ability to edit (heal) portions of schedule the OCR couldn't fully recognize
