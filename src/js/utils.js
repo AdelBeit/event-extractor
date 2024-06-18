@@ -18,7 +18,17 @@ function toggleButtonUIHandler(button) {
 }
 
 function toggleOriginal() {
-  const container = document.querySelector(".original-events-container");
+  toggleHidden(".original-events-container");
+}
+
+function toggleDemo() {
+  toggleHidden(".upload-stage div.demo");
+  const button = document.querySelector("p button.demo");
+  button.toggleAttribute("active");
+}
+
+function toggleHidden(classname) {
+  const container = document.querySelector(classname);
   container.classList.toggle("hidden");
 }
 

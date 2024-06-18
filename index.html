@@ -42,7 +42,11 @@
           <p class="disclaimer">
             everything is done on your device and no information is shared with
             anyone.
-            <p class="underline text-accent-green"><a href="https://vimeo.com/956829214">view demo</a></p>
+            <p class="underline text-accent-green"><button class="group demo" onclick="toggleDemo()"><span class="group-[&[active]]:hidden">view</span><span class="hidden group-[&[active]]:inline">close</span> demo</button></p>
+            <div class="demo hidden w-3/4 max-w-[300px] max-sm:m-auto "><video width="100%" height="auto" controls>
+              <source src="https://github.com/AdelBeit/event-extractor/raw/main/assets/event-extractor-demo.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video></div>
           </p>
           <div class="upload-button flex justify-center pt-[6rem] tablet:pt-[10rem]">
             <input
