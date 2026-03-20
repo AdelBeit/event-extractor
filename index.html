@@ -19,9 +19,9 @@
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="src/js/utils.js"></script>
   </head>
-  <body class="max-w-[1000px] m-auto relative">
-    <main class="min-h-fit h-full overflow-y-scroll pb-20 laptop:pb-0">
-      <div class="px-2 laptop:px-12 pb-2 h-fit min-h-full">
+  <body class="relative min-h-screen">
+    <main class="max-w-[1000px] mx-auto px-4 laptop:px-12 pb-32 tablet:pb-24 pt-4">
+      <div class="pb-2 h-fit min-h-full">
         <div class="heading flex justify-between pr-3 laptop:pr-0 pt-6">
           <h1 class="text-3xl font-bold text-accent-green"><a href="">Calendarizer 3000</a></h1>
           <button
@@ -42,13 +42,8 @@
           <p class="disclaimer">
             everything is done on your device and no information is shared with
             anyone.
-            <p class="underline text-accent-green"><button class="group demo" onclick="toggleDemo()"><span class="group-[&[active]]:hidden">view</span><span class="hidden group-[&[active]]:inline">close</span> demo</button></p>
-            <div class="demo hidden w-3/4 max-w-[300px] max-sm:m-auto "><video width="100%" height="auto" controls>
-              <source src="https://github.com/AdelBeit/event-extractor/raw/main/assets/event-extractor-demo.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video></div>
           </p>
-          <div class="upload-button flex justify-center pt-[6rem] tablet:pt-[10rem]">
+          <div class="upload-button flex justify-center pt-[6rem] max-sm:pt-[2.5rem] tablet:pt-[10rem]">
             <input
               type="file"
               name="screenshot-input"
@@ -164,10 +159,15 @@
           </div>
         </div>
         <div
-          class="btn-container absolute z-[5] bottom-6 right-6 laptop:right-12 animate__pulse">
+          class="btn-container fixed z-[5] bottom-6 right-6 laptop:right-12 flex items-center gap-4">
+          <button
+            class="demo-trigger bg-accent-green hover:bg-house-green text-white text-sm tablet:text-base font-semibold rounded-lg px-4 py-2"
+            onclick="toggleDemo()">
+            View demo
+          </button>
           <a
             title="Support me on ko-fi.com"
-            class="kofi-button w-fit h-fit"
+            class="kofi-button w-fit h-fit animate__pulse"
             href="https://ko-fi.com/X8X1YELWX"
             target="_blank"
             ><img
@@ -181,6 +181,30 @@
         </div>
       </div>
     </main>
+    <div
+      id="demo-modal"
+      class="fixed inset-0 z-[10] hidden items-center justify-center bg-black/70 p-4">
+      <div
+        class="demo-modal-content relative w-full max-w-[800px] rounded-xl bg-white p-4 shadow-xl">
+        <button
+          class="demo-close absolute right-3 top-3 text-dark-gray hover:text-black text-xl font-bold"
+          aria-label="Close demo"
+          onclick="toggleDemo()">
+          X
+        </button>
+        <div class="w-full">
+          <video
+            class="w-full h-auto max-h-[80vh] rounded-lg"
+            controls
+            preload="metadata">
+            <source
+              src="https://github.com/AdelBeit/event-extractor/raw/main/assets/event-extractor-demo.mp4"
+              type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
     <script src="src/js/tesseract-ocr.js"></script>
     <script src="src/js/ics.deps.min.js"></script>
     <script src="src/js/eventExtractor.js"></script>

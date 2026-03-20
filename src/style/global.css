@@ -19,7 +19,6 @@ html {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 body {
@@ -28,6 +27,10 @@ body {
     #ffffff 0%,
     #d4e9e2 100%
   );
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 .disclaimer {

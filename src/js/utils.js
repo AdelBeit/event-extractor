@@ -4,6 +4,8 @@ var EDIT_MODE = false;
 var SHOW_EDIT_MODE = false;
 var SHOW_ORIGINAL = false;
 
+document.addEventListener("DOMContentLoaded", initDemoModal);
+
 function fileLoadedCheck() {
   if (LOG_FILE_NAMES)
     console.log("loaded", document.currentScript.src.split("/").pop());
@@ -22,14 +24,47 @@ function toggleOriginal() {
 }
 
 function toggleDemo() {
-  toggleHidden(".upload-stage div.demo");
-  const button = document.querySelector("p button.demo");
-  button.toggleAttribute("active");
+  const modal = document.querySelector("#demo-modal");
+  if (!modal) return;
+  const isHidden = modal.classList.contains("hidden");
+  if (isHidden) {
+    openDemoModal(modal);
+  } else {
+    closeDemoModal(modal);
+  }
 }
 
 function toggleHidden(classname) {
   const container = document.querySelector(classname);
   container.classList.toggle("hidden");
+}
+
+function initDemoModal() {
+  const modal = document.querySelector("#demo-modal");
+  if (!modal) return;
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeDemoModal(modal);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDemoModal(modal);
+  });
+}
+
+function openDemoModal(modal) {
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  document.body.classList.add("modal-open");
+}
+
+function closeDemoModal(modal) {
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  document.body.classList.remove("modal-open");
+  const video = modal.querySelector("video");
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
 }
 
 function updateStage(newStage) {
