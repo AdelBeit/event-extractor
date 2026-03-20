@@ -5,8 +5,8 @@
   "main": "index.html",
   "scripts": {
     "test": "jest",
-    "tw": "pnpx tailwindcss -i ./src/style/global.css -o ./src/style/tw-global.css --watch",
-    "tw-build": "pnpx tailwindcss -i ./src/style/global.css -o ./src/style/tw-global.css",
+    "tw": "tailwindcss -i ./src/style/global.css -o ./src/style/tw-global.css --watch",
+    "tw-build": "tailwindcss -i ./src/style/global.css -o ./src/style/tw-global.css",
     "dev": "vite"
   },
   "keywords": [],
